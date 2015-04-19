@@ -34,8 +34,9 @@ module.exports = function(grunt) {
 				},
 				preBundleCB: function(b) {
 					b.plugin(remapify, [
-						{cwd: "./src/model", src: "**/*.js", expose: "model"},
-						{cwd: "./src/util/", src: "**/*.js", expose: "util"}
+						{cwd: "./src/model/", src: "*.js", expose: "model"},
+						{cwd: "./src/model/behaviour", src: "*.js", expose: "model"},
+						{cwd: "./src/util/", src: "*.js", expose: "util"}
 					]);
 				}
 			},
