@@ -36,6 +36,7 @@ module.exports = function(grunt) {
 					b.plugin(remapify, [
 						{cwd: "./src/model/", src: "*.js", expose: "model"},
 						{cwd: "./src/model/behaviour", src: "*.js", expose: "model"},
+						{cwd: "./src/renderer/pixi", src: "*.js", expose: "renderer"},
 						{cwd: "./src/util/", src: "*.js", expose: "util"}
 					]);
 				}

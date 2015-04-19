@@ -1,6 +1,6 @@
 {
 	"globals": {
-		"PIXI": false,
+		"PIXI": true,
 		"slots": false,
 		"core": false,
 		"TweenMax": false,

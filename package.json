@@ -5,9 +5,11 @@
     ]
   },
   "browser": {
-    "MersenneTwister": "./lib/mersenne-twister.js"
+    "MersenneTwister": "./lib/mersenne-twister.js",
+    "PIXI": "./lib/pixi.dev.js"
   },
   "browserify-shim": {
+    "./lib/pixi.dev.js": "global:PIXI",
     "./lib/mersenne-twister.js": "MersenneTwister"
   },
   "devDependencies": {
