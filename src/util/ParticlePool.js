@@ -1,4 +1,4 @@
-var Particle = require("Particle");
+var Particle = require("model/Particle");
 
 ParticlePool.global = new ParticlePool();
 

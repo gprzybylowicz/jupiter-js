@@ -21,7 +21,6 @@ function Particle() {
 	this.sizeStart = new Point();
 	this.sizeEnd = new Point();
 
-
 	this.color = new Color(255, 255, 255, 1);
 	this.colorStart = new Color();
 	this.colorEnd = new Color();
