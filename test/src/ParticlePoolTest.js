@@ -1,4 +1,4 @@
-var ParticlePool = require("util/ParticlePool");
+var ParticlePool = require("jupiter").ParticlePool;
 
 describe("ParticlePoolTest", function() {
 

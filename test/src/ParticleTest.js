@@ -1,4 +1,5 @@
-var Particle = require("model/Particle");
+
+var Particle = require("jupiter").Particle;
 
 describe("ParticleTest", function() {
 

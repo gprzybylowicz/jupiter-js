@@ -1,6 +1,6 @@
-var EmitterBehaviours = require("model/EmitterBehaviours");
-var LifeBehaviour = require("model/LifeBehaviour");
-var ParticlePool = require("util/ParticlePool");
+var EmitterBehaviours = require("./behaviour").EmitterBehaviours;
+var LifeBehaviour = require("./behaviour").LifeBehaviour;
+var ParticlePool = require("./ParticlePool.js");
 
 function Emitter(observer) {
 

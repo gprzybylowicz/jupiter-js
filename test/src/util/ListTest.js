@@ -1,4 +1,4 @@
-var List = require("util/List");
+var List = require("jupiter").List;
 
 describe("ListTest", function() {
 

@@ -1,6 +1,6 @@
-var LifeBehaviour = require("model/LifeBehaviour");
-var Particle = require("model/Particle");
-var MathUtil = require("util/MathUtil");
+var LifeBehaviour = require("jupiter").LifeBehaviour;
+var Particle = require("jupiter").Particle;
+var MathUtil = require("jupiter").Math;
 
 describe("LifeBehaviourTest", function() {
 
@@ -51,8 +51,8 @@ describe("LifeBehaviourTest", function() {
 		for (var i = 0; i < 10; i++) {
 			behaviour.apply(particle, DELTA_TIME);
 			var correctLifeTime = DELTA_TIME * (i + 1);
-			assert.ok(MathUtil.areEqual(particle.lifeTime, correctLifeTime));
-			assert.ok(MathUtil.areEqual(particle.lifeProgress, correctLifeTime / 20));
+			assert.closeTo(particle.lifeTime, correctLifeTime, MathUtil.EPSILON);
+			assert.closeTo(particle.lifeProgress, correctLifeTime / 20, MathUtil.EPSILON);
 		}
 
 	});

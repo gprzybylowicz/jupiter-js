@@ -1,4 +1,4 @@
-var Random = require("util/Random");
+var Random = require("../util").Random;
 
 function Behaviour() {
 	this.priority = 0;

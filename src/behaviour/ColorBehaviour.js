@@ -1,5 +1,5 @@
-var Behaviour = require("model/Behaviour");
-var Color = require("util/Color");
+var Behaviour = require("./Behaviour.js");
+var Color = require("../util").Color;
 
 ColorBehaviour.DEFAULT_PRIORITY = 0;
 

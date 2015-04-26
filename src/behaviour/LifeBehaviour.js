@@ -1,4 +1,4 @@
-var Behaviour = require("model/Behaviour");
+var Behaviour = require("./Behaviour.js");
 
 LifeBehaviour.DEFAULT_PRIORITY = 10000;
 

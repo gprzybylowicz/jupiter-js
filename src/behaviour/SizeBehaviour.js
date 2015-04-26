@@ -1,5 +1,5 @@
-var Behaviour = require("model/Behaviour");
-var Point = require("util/Point");
+var Behaviour = require("./Behaviour.js");
+var Point = require("../util").Point;
 
 SizeBehaviour.DEFAULT_PRIORITY = 0;
 

@@ -1,5 +1,5 @@
-var Point = require("util/Point");
-var Color = require("util/Color");
+var Point = require("./util").Point;
+var Color = require("./util").Color;
 
 Particle._UID = Particle._UID || {value: 0};
 

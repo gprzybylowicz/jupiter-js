@@ -1,6 +1,6 @@
-var EmitterBehaviours = require("model/EmitterBehaviours");
-var Behaviour = require("model/Behaviour");
-var Particle = require("model/Particle");
+var EmitterBehaviours = require("jupiter").EmitterBehaviours;
+var Behaviour = require("jupiter").Behaviour;
+var Particle = require("jupiter").Particle;
 
 describe("EmitterBehavioursTest", function() {
 

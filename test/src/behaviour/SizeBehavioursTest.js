@@ -1,5 +1,5 @@
-var SizeBehaviour = require("model/SizeBehaviour");
-var Particle = require("model/Particle");
+var SizeBehaviour = require("jupiter").SizeBehaviour;
+var Particle = require("jupiter").Particle;
 
 describe("SizeBehaviourTest", function() {
 

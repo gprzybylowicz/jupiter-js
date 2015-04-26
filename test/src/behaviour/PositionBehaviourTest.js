@@ -1,5 +1,5 @@
-var PositionBehaviour = require("model/PositionBehaviour");
-var Particle = require("model/Particle");
+var PositionBehaviour = require("jupiter").PositionBehaviour;
+var Particle = require("jupiter").Particle;
 
 describe("PositionBehaviourTest", function() {
 

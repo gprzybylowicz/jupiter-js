@@ -1,5 +1,4 @@
 var ip = require("ip");
-var remapify = require("remapify");
 
 var config = {};
 config.port = 8888;
@@ -9,80 +8,93 @@ config.path = "http://" + ip.address() + ":" + config.port;
 module.exports = function(grunt) {
 
 	grunt.initConfig({
-		connect: {
-			server: {
-				options: {
-					hostname: config.host,
-					port: config.port,
-					livereload: 35729
-				}
-			}
-		},
-		watch: {
-			jupiter: {
-				files: ["src/**/*.js", "test/src/**/*.js"],
-				tasks: ["build", "test"],
-				options: {
-					livereload: true
-				}
-			}
-		},
-		browserify: {
-			options: {
-				browserifyOptions: {
-					debug: true
-				},
-				preBundleCB: function(b) {
-					b.plugin(remapify, [
-						{cwd: "./src/model/", src: "*.js", expose: "model"},
-						{cwd: "./src/model/behaviour", src: "*.js", expose: "model"},
-						{cwd: "./src/renderer/pixi", src: "*.js", expose: "renderer"},
-						{cwd: "./src/util/", src: "*.js", expose: "util"}
-					]);
+			pkg: grunt.file.readJSON('package.json'),
+			connect: {
+				server: {
+					options: {
+						hostname: config.host,
+						port: config.port,
+						livereload: 35729
+					}
 				}
 			},
-			core: {
-				files: {
-					"bin/jupiter_core.js": ["src/**/*.js"]
+			watch: {
+				jupiter: {
+					files: ["src/**/*.js"],
+					tasks: ["build"],
+					options: {
+						livereload: true
+					}
 				}
 			},
-			test: {
-				files: {
-					"test/runner/tests.js": ["bin/jupiter_core.js", "test/src/**/*.js"]
-				}
-			}
-		},
-		exorcise: {
-			core: {
-				options: {
-					root: "../"
+			browserify: {
+				standalone: {
+					src: ["src/index.js"],
+					dest: "./bin/jupiter.standalone.js",
+					options: {
+						browserifyOptions: {
+							debug: true,
+							standalone: "jupiter"
+						}
+					}
 				},
-				files: {
-					"bin/jupiter_core.js.map": ["bin/jupiter_core.js"]
-				}
-			}
-		},
-		jshint: {
-			all: ["!Gruntfile.js", "src/**/*.js", "test/src/**/*.js", "!test/runner/**/*"],
-			options: {
-				jshintrc: ".jshintrc"
-			}
-		},
-		clean: {
-			core: ["bin/**/*"]
-		},
-		mocha: {
-			test: {
-				options: {
-					run: true,
-					log: true,
-					logErrors: true,
-					urls: [config.path + "/test/runner/"]
+				require: {
+					src: ["src/index.js"],
+					dest: "./bin/jupiter.require.js",
+					options: {
+						preBundleCB: function(b) {
+							b.require("./src/index.js", {expose: 'jupiter'});
+						}
+					}
+				},
+				test: {
+					src: ["test/src/**/*.js"],
+					dest: "./test/runner/index.test.js",
+					options: {
+						external: ["jupiter"]
+					}
 				}
 
+			},
+			exorcise: {
+				core: {
+					options: {
+						root: "../"
+					}
+					,
+					files: {
+						"bin/jupiter.standalone.js.map": ["bin/jupiter.standalone.js"]
+					}
+				}
 			}
-		},
-	});
+			,
+			jshint: {
+				all: ["!Gruntfile.js", "src/**/*.js", "test/src/**/*.js", "!test/runner/**/*"],
+				options: {
+					jshintrc: ".jshintrc"
+				}
+			}
+			,
+			clean: {
+				core: ["bin/**/*"]
+			}
+			,
+			mocha: {
+				test: {
+					options: {
+						run: true,
+						log: true,
+						logErrors: true,
+						require:"./bin/jupiter.require.js",
+						clearRequireCache: true,
+						urls: [config.path + "/test/runner/"]
+					}
+
+				}
+			}
+		}
+	)
+	;
 
 	grunt.registerTask("default", [
 		"connect",
@@ -92,13 +104,13 @@ module.exports = function(grunt) {
 	grunt.registerTask("build", [
 		"jshint",
 		"clean",
-		"browserify:core",
+		"browserify:standalone",
+		"browserify:require",
 		"exorcise"
 	]);
 
 	grunt.registerTask("test", [
 		"jshint",
-		"browserify:core",
 		"browserify:test",
 		"mocha"
 	]);
@@ -110,4 +122,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-mocha");
-};
+}
+;

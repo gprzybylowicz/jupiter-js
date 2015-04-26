@@ -1,4 +1,4 @@
-var MathUtil = require("util/MathUtil");
+var MathUtil = require("./Math.js");
 
 function Color(r, g, b, alpha) {
 	this.r = r || 0;

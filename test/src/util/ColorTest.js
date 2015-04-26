@@ -1,4 +1,4 @@
-var Color = require("util/Color");
+var Color = require("jupiter").Color;
 
 describe("ColorTest", function() {
 

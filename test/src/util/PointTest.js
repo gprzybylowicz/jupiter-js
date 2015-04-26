@@ -1,4 +1,4 @@
-var Point = require("util/Point");
+var Point = require("jupiter").Point;
 
 describe("PointTest", function() {
 
