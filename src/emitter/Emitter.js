@@ -1,21 +1,20 @@
-var EmitterBehaviours = require("./behaviour").EmitterBehaviours;
-var LifeBehaviour = require("./behaviour").LifeBehaviour;
-var ParticlePool = require("./ParticlePool.js");
+var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
+var LifeBehaviour = require("../behaviour").LifeBehaviour;
+var ParticlePool = require("../ParticlePool.js");
+var List = require("../util").List;
+var DefaultEmitController = require("../controller").DefaultEmitContoller;
 
 function Emitter(observer) {
-
-	this.emitPerFrame = 1;
-	this.maxParticles = 0;
 	this.list = new List();
 	this.behavious = new EmitterBehaviours();
 
-	this.lifeBehaviour = new LifeBehaviour(); //TODO: removed this dependency
+	this.lifeBehaviour = new LifeBehaviour(); //TODO: remove this dependency
 	this.behavious.add(this.lifeBehaviour);
 
 	this.play = true;
-	this.frames = 0;
 
 	this.setObserver(observer);
+	this.emitController = new DefaultEmitController();
 }
 
 Emitter.prototype.setObserver = function(observer) {
@@ -30,7 +29,7 @@ Emitter.prototype.setObserver = function(observer) {
 };
 
 Emitter.prototype.update = function(deltaTime) {
-	if(!this.play) return;
+	if (!this.play) return;
 
 	this.createParticles(deltaTime);
 
@@ -40,23 +39,13 @@ Emitter.prototype.update = function(deltaTime) {
 };
 
 Emitter.prototype.createParticles = function(deltaTime) {
-	var emitPerSec = this.maxParticles/this.lifeBehaviour.maxLifeTime;
-	var fps =  1/deltaTime;
-	var ratio = (emitPerSec/fps);
-	this.frames += ratio;
+	var particlesToEmit = this.emitController.howMany(deltaTime);
 
-
-
-	if(this.frames >= 1.0){
-		var toEmit = Math.round(this.frames);
-		this.frames = 0;
-		for (var i = 0; i < toEmit; ++i) {
-			var particle = this.list.add(ParticlePool.global.pop());
-			this.behavious.init(particle);
-			this.observer.onCreate(particle);
-		}
+	for (var i = 0; i < particlesToEmit; ++i) {
+		var particle = this.list.add(ParticlePool.global.pop());
+		this.behavious.init(particle);
+		this.observer.onCreate(particle);
 	}
-
 };
 
 Emitter.prototype.updateParticle = function(particle, deltaTime) {
