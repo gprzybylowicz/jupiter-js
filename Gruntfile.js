@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("default", [
 		"connect",
-		"watch"
+		//"watch"
 	]);
 
 	grunt.registerTask("build", [

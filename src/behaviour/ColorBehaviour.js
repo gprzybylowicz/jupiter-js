@@ -1,5 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Color = require("../util").Color;
+var ColorConfigParser = require("../config").ColorConfigParser;
 
 ColorBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -42,6 +43,11 @@ ColorBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.color.g += (particle.colorEnd.g - particle.colorStart.g) * particle.lifeProgress;
 	particle.color.b += (particle.colorEnd.b - particle.colorStart.b) * particle.lifeProgress;
 	particle.color.alpha += (particle.colorEnd.alpha - particle.colorStart.alpha) * particle.lifeProgress;
+
+};
+
+ColorBehaviour.prototype.getConfigParser = function() {
+    return new ColorConfigParser(this);
 };
 
 module.exports = ColorBehaviour;

@@ -1,6 +1,7 @@
 var LifeBehaviour = require("jupiter").LifeBehaviour;
 var Particle = require("jupiter").Particle;
 var MathUtil = require("jupiter").Math;
+var LifeConfigParser = require("jupiter").config.LifeConfigParser;
 
 describe("LifeBehaviourTest", function() {
 
@@ -55,6 +56,11 @@ describe("LifeBehaviourTest", function() {
 			assert.closeTo(particle.lifeProgress, correctLifeTime / 20, MathUtil.EPSILON);
 		}
 
+	});
+
+	it("getConfigParser return life config parser", function() {
+		var behaviour = new LifeBehaviour();
+		assert.instanceOf(behaviour.getConfigParser(), LifeConfigParser);
 	});
 
 });

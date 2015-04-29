@@ -1,5 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Point = require("../util").Point;
+var PositionConfigParser = require("../config").PositionConfigParser;
 
 PositionBehaviour.DEFAULT_PRIORITY = 100;
 
@@ -40,6 +41,10 @@ PositionBehaviour.prototype.apply = function(particle, deltaTime) {
 
 	particle.position.x += (particle.velocity.x * deltaTime);
 	particle.position.y += (particle.velocity.y * deltaTime);
+};
+
+PositionBehaviour.prototype.getConfigParser = function() {
+	return new PositionConfigParser(this);
 };
 
 module.exports = PositionBehaviour;

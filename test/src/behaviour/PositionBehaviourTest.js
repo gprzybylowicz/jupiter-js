@@ -1,5 +1,6 @@
 var PositionBehaviour = require("jupiter").PositionBehaviour;
 var Particle = require("jupiter").Particle;
+var PositionConfigParser = require("jupiter").config.PositionConfigParser;
 
 describe("PositionBehaviourTest", function() {
 
@@ -59,6 +60,11 @@ describe("PositionBehaviourTest", function() {
 
 		assert.equal(particle.position.x, startX + velocityX * DELTA_TIME);
 		assert.equal(particle.position.y, startY + velocityY * DELTA_TIME);
+	});
+
+	it("getConfigParser return position config parser", function() {
+		var behaviour = new PositionBehaviour();
+		assert.instanceOf(behaviour.getConfigParser(), PositionConfigParser);
 	});
 
 });

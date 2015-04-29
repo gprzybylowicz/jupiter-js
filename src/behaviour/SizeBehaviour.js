@@ -1,5 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Point = require("../util").Point;
+var SizeConfigParser = require("../config").SizeConfigParser;
 
 SizeBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -44,6 +45,10 @@ SizeBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.size.copyFrom(particle.sizeStart);
 	particle.size.x += (particle.sizeEnd.x - particle.sizeStart.x) * particle.lifeProgress;
 	particle.size.y += (particle.sizeEnd.y - particle.sizeStart.y) * particle.lifeProgress;
+};
+
+SizeBehaviour.prototype.getConfigParser = function() {
+	return new SizeConfigParser(this);
 };
 
 module.exports = SizeBehaviour;
