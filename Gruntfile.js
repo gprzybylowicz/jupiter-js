@@ -1,7 +1,7 @@
 var ip = require("ip");
 
 var config = {};
-config.port = 8888;
+config.port =  Math.floor(Math.random() * 1000 + 8000);
 config.host = ip.address();
 config.path = "http://" + ip.address() + ":" + config.port;
 
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 						run: true,
 						log: true,
 						logErrors: true,
-						require:"./bin/jupiter.require.js",
+						require: "./bin/jupiter.require.js",
 						clearRequireCache: true,
 						urls: [config.path + "/test/runner/"]
 					}
