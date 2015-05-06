@@ -37,7 +37,7 @@ describe("ParserTest", function() {
 		color.alpha = 0.5;
 		color.hex = 0xff6622;
 
-		var rawData = parser._writeColor(Color);
+		var rawData = parser._writeColor(color);
 		assert.equal(rawData.hex, color.hex);
 		assert.equal(rawData.alpha, color.alpha);
 	});
@@ -46,7 +46,7 @@ describe("ParserTest", function() {
 		var parser = new Parser(new Behaviour());
 		var rawData = {hex: 0x778899, alpha: 0.1};
 
-		var color = parser._readColor(Color);
+		var color = parser._readColor(rawData);
 		assert.equal(color.hex, rawData.hex);
 		assert.equal(color.alpha, rawData.alpha);
 	});

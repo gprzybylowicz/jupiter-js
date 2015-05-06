@@ -17,10 +17,10 @@ describe("ColorBehaviourTest", function() {
 		behaviour.colorEndVariance.alpha = 0.5;
 
 		var target = {
-			colorStart: {hex: 0x7722AA, alpha: 0},
-			colorEnd: {hex: 0x0000, alpha: 0.7},
-			colorStartVariance: {hex: 0x111111, alpha: 1},
-			colorEndVariance: {hex: 0x0000, alpha: 0.5}
+			start: {hex: 0x7722AA, alpha: 0},
+			end: {hex: 0x0000, alpha: 0.7},
+			startVariance: {hex: 0x111111, alpha: 1},
+			endVariance: {hex: 0x0000, alpha: 0.5}
 		};
 		var config = {};
 		behaviour.getConfigParser().write(config);
@@ -31,9 +31,9 @@ describe("ColorBehaviourTest", function() {
 		var behaviour = new ColorBehaviour();
 
 		var config = {
-			colorStart: {hex: 0x02221, alpha: 0},
-			colorStartVariance: {hex: 0x111111, alpha: 1},
-			colorEndVariance: {hex: 0x0000, alpha: 0.5}
+			start: {hex: 0x02221, alpha: 0},
+			startVariance: {hex: 0x111111, alpha: 1},
+			endVariance: {hex: 0x0000, alpha: 0.5}
 		};
 		behaviour.getConfigParser().read(config);
 		assert.equal(behaviour.colorStart.hex, 0x02221);
