@@ -13,6 +13,7 @@ var minimist = require('minimist');
 var watchify = require('watchify');
 var watch = require('gulp-watch');
 var jshint = require('gulp-jshint');
+var runSequence = require('run-sequence');
 
 var options = minimist(process.argv.slice(2));
 
@@ -27,10 +28,11 @@ gulp.task('jshint', function() {
 		.pipe(jshint.reporter('fail'));
 });
 
-gulp.task("browserify:require", ["jshint"], function() {
+gulp.task("browserify:standalone", ["jshint"], function() {
 	var b = browserify({
 		entries: "./src/index.js",
-		debug: true
+		debug: true,
+		standalone: "jupiter"
 	});
 
 	return b.bundle()
@@ -67,7 +69,10 @@ gulp.task("mocha", ["browserify:test"], function() {
 		}));
 });
 
-gulp.task("build", ["clean", "browserify:require"]);
+gulp.task("build", function(done) {
+	runSequence("clean", "browserify:standalone", done);
+});
+
 gulp.task("test", ["mocha"]);
 
 gulp.task("test-watch", function() {
