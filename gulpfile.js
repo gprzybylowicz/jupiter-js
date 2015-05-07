@@ -12,6 +12,7 @@ var gulp = require("gulp");
 var minimist = require('minimist');
 var watchify = require('watchify');
 var watch = require('gulp-watch');
+var jshint = require('gulp-jshint');
 
 var options = minimist(process.argv.slice(2));
 
@@ -19,7 +20,14 @@ gulp.task("clean", function() {
 	del(["bin/*"]);
 });
 
-gulp.task("browserify:require", function() {
+gulp.task('jshint', function() {
+	return gulp.src(['./src/**/*.js'])
+		.pipe(jshint('.jshintrc'))
+		.pipe(jshint.reporter('jshint-stylish'))
+		.pipe(jshint.reporter('fail'));
+});
+
+gulp.task("browserify:require", ["jshint"], function() {
 	var b = browserify({
 		entries: "./src/index.js",
 		debug: true
@@ -34,7 +42,7 @@ gulp.task("browserify:require", function() {
 		.pipe(gulp.dest("./bin"))
 });
 
-gulp.task("browserify:test", function() {
+gulp.task("browserify:test", ["jshint"], function() {
 	var test = options.test || "*";
 	var files = glob.sync("./test/src/**/" + test + ".js");
 	var b = browserify({
@@ -62,7 +70,7 @@ gulp.task("mocha", ["browserify:test"], function() {
 gulp.task("build", ["clean", "browserify:require"]);
 gulp.task("test", ["mocha"]);
 
-gulp.task("test:watch", function() {
+gulp.task("test-watch", function() {
 	watch(["./src/**/*.js", "./test/src/**/*.js"], function() {
 		gulp.start("test");
 	});
