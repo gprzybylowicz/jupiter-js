@@ -63,4 +63,31 @@ describe("LifeBehaviourTest", function() {
 		assert.instanceOf(behaviour.getConfigParser(), LifeConfigParser);
 	});
 
+	it("write to config", function() {
+		var behaviour = new LifeBehaviour();
+		behaviour.maxLifeTime = 1234;
+		behaviour.timeVariance = 100;
+
+		var target = {
+			time: 1234,
+			variance: 100
+		};
+
+		var config = {};
+		behaviour.getConfigParser().write(config);
+		assert.deepEqual(config, target);
+	});
+
+	it("read from config", function() {
+		var behaviour = new LifeBehaviour();
+
+		var config = {
+			time: 888,
+			variance: 111
+		};
+		behaviour.getConfigParser().read(config);
+		assert.equal(behaviour.maxLifeTime, config.time);
+		assert.equal(behaviour.timeVariance, config.variance);
+	});
+
 });

@@ -11,6 +11,7 @@ var gutil = require('gulp-util');
 var gulp = require("gulp");
 var minimist = require('minimist');
 var watchify = require('watchify');
+var watch = require('gulp-watch');
 
 var options = minimist(process.argv.slice(2));
 
@@ -41,6 +42,8 @@ gulp.task("browserify:test", function() {
 		insertGlobals: true
 	});
 
+	b = watchify(b);
+
 	return b.require("./src/index.js", {expose: "jupiter"})
 		.bundle()
 		.pipe(source("./test/src/ParticleTest.js"))
@@ -57,6 +60,10 @@ gulp.task("mocha", ["browserify:test"], function() {
 });
 
 gulp.task("build", ["clean", "browserify:require"]);
-gulp.task("test", ["mocha"], function() {
+gulp.task("test", ["mocha"]);
 
+gulp.task("test:watch", function() {
+	watch(["./src/**/*.js", "./test/src/**/*.js"], function() {
+		gulp.start("test");
+	});
 });

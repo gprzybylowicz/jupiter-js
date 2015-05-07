@@ -22,6 +22,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.4",
+    "gulp-watch": "^4.2.4",
     "minimist": "^1.1.1",
     "sinon": "^1.14.1",
     "vinyl-buffer": "^1.0.0",
