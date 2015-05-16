@@ -1,16 +1,25 @@
 var Point = require("../util").Point;
 var Color = require("../util").Color;
 
-function Parser(behaviour) {
+function Parser(behaviour, type) {
 	this._behaviour = behaviour;
+	this._type = type;
 }
 
 Parser.prototype.write = function(config) {
-	console.warn("Default Parse doesn't write config");
+	config[this._type] = JSON.stringify(this._behaviour);
 };
 
 Parser.prototype.read = function(config) {
-	console.warn("Default Parse doesn't read config");
+	var data = JSON.parse(config);
+	for (var key in data) {
+		if (this._behaviour[key] instanceof Object) {
+			this._behaviour[key].copyFrom(data[key]);
+		}
+		else {
+			this._behaviour[key] = data[key];
+		}
+	}
 };
 
 Parser.prototype._writePoint = function(point) {

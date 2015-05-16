@@ -1,4 +1,3 @@
-
 function EmitterBehaviours() {
 	this.behaviours = [];
 }
@@ -9,7 +8,7 @@ EmitterBehaviours.prototype.getAll = function() {
 
 EmitterBehaviours.prototype.add = function(behaviour) {
 	for (var i = 0; i < this.behaviours.length; ++i) {
-		if(this.behaviours[i] === behaviour){
+		if (this.behaviours[i] === behaviour) {
 			throw new Error("Emitter duplicate");
 		}
 	}

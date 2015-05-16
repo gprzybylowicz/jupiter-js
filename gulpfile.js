@@ -10,7 +10,6 @@ var concat = require('gulp-concat');
 var gutil = require('gulp-util');
 var gulp = require("gulp");
 var minimist = require('minimist');
-var watchify = require('watchify');
 var watch = require('gulp-watch');
 var jshint = require('gulp-jshint');
 var runSequence = require('run-sequence');
@@ -37,7 +36,7 @@ gulp.task("browserify:standalone", ["jshint"], function() {
 
 	return b.bundle()
 		.pipe(source("./src/index.js"))
-		.pipe(rename("jupiter.require.js"))
+		.pipe(rename("jupiter.js"))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({loadMaps: true})).on("error", gutil.log)
 		.pipe(sourcemaps.write("./"))
@@ -51,8 +50,6 @@ gulp.task("browserify:test", ["jshint"], function() {
 		entries: files.concat(["./test/src/index.js"]),
 		insertGlobals: true
 	});
-
-	b = watchify(b);
 
 	return b.require("./src/index.js", {expose: "jupiter"})
 		.bundle()

@@ -2,14 +2,14 @@ var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
 var LifeBehaviour = require("../behaviour").LifeBehaviour;
 var ParticlePool = require("../ParticlePool.js");
 var List = require("../util").List;
-var DefaultEmitController = require("../controller").DefaultEmitContoller;
+var DefaultEmitController = require("../controller").DefaultEmitController;
 
 function Emitter(observer) {
 	this.list = new List();
-	this.behavious = new EmitterBehaviours();
+	this._behavious = new EmitterBehaviours();
 
 	this.lifeBehaviour = new LifeBehaviour(); //TODO: remove this dependency
-	this.behavious.add(this.lifeBehaviour);
+	this._behavious.add(this.lifeBehaviour);
 
 	this.play = true;
 
@@ -43,7 +43,7 @@ Emitter.prototype.createParticles = function(deltaTime) {
 
 	for (var i = 0; i < particlesToEmit; ++i) {
 		var particle = this.list.add(ParticlePool.global.pop());
-		this.behavious.init(particle);
+		this._behavious.init(particle);
 		this.observer.onCreate(particle);
 	}
 };
@@ -55,9 +55,13 @@ Emitter.prototype.updateParticle = function(particle, deltaTime) {
 		ParticlePool.global.push(particle);
 	}
 	else {
-		this.behavious.apply(particle, deltaTime);
+		this._behavious.apply(particle, deltaTime);
 		this.observer.onUpdate(particle);
 	}
+};
+
+Emitter.prototype.getBehaviours = function() {
+    return this._behavious.getAll().concat([this.lifeBehaviour]);
 };
 
 module.exports = Emitter;
