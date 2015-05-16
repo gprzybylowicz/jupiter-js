@@ -1,5 +1,5 @@
 var Behaviour = require("./Behaviour.js");
-var LifeConfigParser = require("../config").LifeConfigParser;
+var BehaviourParser = require("../config").BehaviourParser;
 
 LifeBehaviour.DEFAULT_PRIORITY = 10000;
 
@@ -10,7 +10,6 @@ function LifeBehaviour() {
 	this.maxLifeTime = 0;
 	this.timeVariance = 0;
 }
-
 
 LifeBehaviour.prototype = Object.create(Behaviour.prototype);
 LifeBehaviour.prototype.constructor = LifeBehaviour;
@@ -33,7 +32,7 @@ LifeBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 LifeBehaviour.prototype.getConfigParser = function() {
-	return new LifeConfigParser(this);
+	return new BehaviourParser(this, "LifeBehaviour");
 };
 
 module.exports = LifeBehaviour;

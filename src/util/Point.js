@@ -16,6 +16,11 @@ Point.prototype.copyFrom = function(point) {
 	return this;
 };
 
+
+Point.prototype.copyFromRawData = function(data) {
+	this.copyFrom(data);
+};
+
 Point.prototype.multiplayByScalar = function(scalar) {
 	this.x *= scalar;
 	this.y *= scalar;

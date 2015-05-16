@@ -1,6 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Point = require("../util").Point;
-var SizeConfigParser = require("../config").SizeConfigParser;
+var BehaviourParser = require("../config").BehaviourParser;
 
 SizeBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -48,7 +48,7 @@ SizeBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 SizeBehaviour.prototype.getConfigParser = function() {
-	return new SizeConfigParser(this);
+	return new BehaviourParser(this, "SizeBehaviour");
 };
 
 module.exports = SizeBehaviour;

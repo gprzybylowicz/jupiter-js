@@ -1,6 +1,6 @@
 var SizeBehaviour = require("jupiter").SizeBehaviour;
 var Particle = require("jupiter").Particle;
-var SizeConfigParser = require("jupiter").config.SizeConfigParser;
+var BehaviourParser = require("jupiter").config.BehaviourParser;
 
 describe("SizeBehaviourTest", function() {
 
@@ -91,7 +91,7 @@ describe("SizeBehaviourTest", function() {
 
 	it("getConfigParser return size config parser", function() {
 		var behaviour = new SizeBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), SizeConfigParser);
+		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
 	});
 
 });

@@ -1,6 +1,6 @@
 var PositionBehaviour = require("jupiter").PositionBehaviour;
 var Particle = require("jupiter").Particle;
-var PositionConfigParser = require("jupiter").config.PositionConfigParser;
+var BehaviourParser = require("jupiter").config.BehaviourParser;
 
 describe("PositionBehaviourTest", function() {
 
@@ -64,7 +64,7 @@ describe("PositionBehaviourTest", function() {
 
 	it("getConfigParser return position config parser", function() {
 		var behaviour = new PositionBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), PositionConfigParser);
+		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
 	});
 
 });

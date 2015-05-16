@@ -1,5 +1,5 @@
 var Random = require("../util").Random;
-var Parser = require("../config").Parser;
+var BehaviourParser = require("../config").BehaviourParser;
 
 function Behaviour() {
 	this.priority = 0;
@@ -20,7 +20,7 @@ Behaviour.prototype.varianceFrom = function(value) {
 };
 
 Behaviour.prototype.getConfigParser = function() {
-	return new Parser();
+	return new BehaviourParser(this, "Behaviour");
 };
 
 module.exports = Behaviour;

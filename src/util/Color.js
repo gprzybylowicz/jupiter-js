@@ -14,6 +14,13 @@ Color.prototype.copyFrom = function(color) {
 	this.alpha = color.alpha;
 };
 
+Color.prototype.copyFromRawData = function(data) {
+	this.r = data._r;
+	this.g = data._g;
+	this.b = data._b;
+	this.alpha = data._alpha;
+};
+
 Color.prototype.add = function(color) {
 	this.r += color.r;
 	this.g += color.g;
@@ -21,7 +28,7 @@ Color.prototype.add = function(color) {
 	this.alpha += color.alpha;
 };
 
-Color.prototype.set = function(r,g,b,a) {
+Color.prototype.set = function(r, g, b, a) {
 	this.r = r || 0;
 	this.g = g || 0;
 	this.b = b || 0;
@@ -68,7 +75,6 @@ Object.defineProperty(Color.prototype, "b", {
 		this._b = MathUtil.clamp(value, 0, 255);
 	}
 });
-
 
 Object.defineProperty(Color.prototype, "alpha", {
 	get: function() {

@@ -73,6 +73,7 @@ gulp.task("build", function(done) {
 gulp.task("test", ["mocha"]);
 
 gulp.task("test-watch", function() {
+	gulp.start("test");
 	watch(["./src/**/*.js", "./test/src/**/*.js"], function() {
 		gulp.start("test");
 	});

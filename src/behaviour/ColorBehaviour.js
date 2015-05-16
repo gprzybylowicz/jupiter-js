@@ -1,6 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Color = require("../util").Color;
-var ColorConfigParser = require("../config").ColorConfigParser;
+var BehaviourParser = require("../config").BehaviourParser;
 
 ColorBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -9,10 +9,10 @@ function ColorBehaviour() {
 
 	this.priority = ColorBehaviour.DEFAULT_PRIORITY;
 
-	this.colorStart = new Color();
-	this.colorEnd = new Color();
-	this.colorStartVariance = new Color();
-	this.colorEndVariance = new Color();
+	this.start = new Color();
+	this.end = new Color();
+	this.startVariance = new Color();
+	this.endVariance = new Color();
 }
 
 ColorBehaviour.prototype = Object.create(Behaviour.prototype);
@@ -21,33 +21,33 @@ ColorBehaviour.prototype.constructor = ColorBehaviour;
 ColorBehaviour.prototype.init = function(particle) {
 	//todo optimalization??
 
-	particle.colorStart.copyFrom(this.colorStart);
-	particle.colorStart.r += this.varianceFrom(this.colorStartVariance.r);
-	particle.colorStart.g += this.varianceFrom(this.colorStartVariance.g);
-	particle.colorStart.b += this.varianceFrom(this.colorStartVariance.b);
-	particle.colorStart.alpha += this.varianceFrom(this.colorStartVariance.alpha);
+	particle.start.copyFrom(this.start);
+	particle.start.r += this.varianceFrom(this.startVariance.r);
+	particle.start.g += this.varianceFrom(this.startVariance.g);
+	particle.start.b += this.varianceFrom(this.startVariance.b);
+	particle.start.alpha += this.varianceFrom(this.startVariance.alpha);
 
-	particle.colorEnd.copyFrom(this.colorEnd);
-	particle.colorEnd.r += this.varianceFrom(this.colorEndVariance.r);
-	particle.colorEnd.g += this.varianceFrom(this.colorEndVariance.g);
-	particle.colorEnd.b += this.varianceFrom(this.colorEndVariance.b);
-	particle.colorEnd.alpha += this.varianceFrom(this.colorEndVariance.alpha);
+	particle.end.copyFrom(this.end);
+	particle.end.r += this.varianceFrom(this.endVariance.r);
+	particle.end.g += this.varianceFrom(this.endVariance.g);
+	particle.end.b += this.varianceFrom(this.endVariance.b);
+	particle.end.alpha += this.varianceFrom(this.endVariance.alpha);
 
-	particle.color.copyFrom(particle.colorStart);
+	particle.color.copyFrom(particle.start);
 };
 
 ColorBehaviour.prototype.apply = function(particle, deltaTime) {
-	particle.color.copyFrom(particle.colorStart);
+	particle.color.copyFrom(particle.start);
 
-	particle.color.r += (particle.colorEnd.r - particle.colorStart.r) * particle.lifeProgress;
-	particle.color.g += (particle.colorEnd.g - particle.colorStart.g) * particle.lifeProgress;
-	particle.color.b += (particle.colorEnd.b - particle.colorStart.b) * particle.lifeProgress;
-	particle.color.alpha += (particle.colorEnd.alpha - particle.colorStart.alpha) * particle.lifeProgress;
+	particle.color.r += (particle.end.r - particle.start.r) * particle.lifeProgress;
+	particle.color.g += (particle.end.g - particle.start.g) * particle.lifeProgress;
+	particle.color.b += (particle.end.b - particle.start.b) * particle.lifeProgress;
+	particle.color.alpha += (particle.end.alpha - particle.start.alpha) * particle.lifeProgress;
 
 };
 
 ColorBehaviour.prototype.getConfigParser = function() {
-    return new ColorConfigParser(this);
+    return new BehaviourParser(this, "ColorBehaviour");
 };
 
 module.exports = ColorBehaviour;
