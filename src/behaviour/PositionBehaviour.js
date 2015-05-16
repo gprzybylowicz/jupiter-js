@@ -44,7 +44,7 @@ PositionBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 PositionBehaviour.prototype.getConfigParser = function() {
-	return new BehaviourParser(this, "PositionBehavuour");
+	return new BehaviourParser(this, "PositionBehaviour");
 };
 
 module.exports = PositionBehaviour;
