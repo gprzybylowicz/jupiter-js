@@ -32,7 +32,7 @@ describe("BehaviourParserTest", function() {
 	it("read", function() {
 		var behaviour = new PositionBehaviour();
 		behaviour.getConfigParser().read(TARGET_CONFIG.PositionBehaviour);
-		
+
 		assert.deepEqual(behaviour.position, new Point(2, 3));
 		assert.deepEqual(behaviour.positionVariance, new Point(3, 4));
 		assert.deepEqual(behaviour.velocity, new Point(10, 11));
