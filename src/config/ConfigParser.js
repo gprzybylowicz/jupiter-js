@@ -1,4 +1,3 @@
-
 var behaviours = require("../behaviour");
 
 function ConfigParser() {
@@ -7,12 +6,12 @@ function ConfigParser() {
 
 ConfigParser.prototype.write = function(emitter) {
 	var config = {behaviours: []};
-	var emitterBehavious = emitter.getBehaviours();
+	var emitterBehavious = emitter.behaviours.getAll();
 
-	console.log(JSON.stringify(emitterBehavious));
-
-	for(var name in behaviours){
-
+	for (var i = 0; i < emitterBehavious.length; i++) {
+		var behaviourConfig = {};
+		emitterBehavious[i].getConfigParser().write(behaviourConfig);
+		config.behaviours.push(behaviourConfig);
 	}
 
 	return config;
