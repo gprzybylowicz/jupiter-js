@@ -2,6 +2,7 @@ var ConfigParser = require("jupiter").ConfigParser;
 var Emitter = require("jupiter").Emitter;
 var LifeBehaviour = require("jupiter").LifeBehaviour;
 var PositionBehaviour = require("jupiter").PositionBehaviour;
+var ColorBehaviour = require("jupiter").ColorBehaviour;
 
 describe("ConfigParserTest", function() {
 
@@ -42,8 +43,12 @@ describe("ConfigParserTest", function() {
 		var config = {behaviours: []};
 		config.behaviours.push(new LifeBehaviour().getConfigParser().write());
 		config.behaviours.push(new PositionBehaviour().getConfigParser().write());
+		config.behaviours.push(new ColorBehaviour().getConfigParser().write());
 		var emitter = parser.read(config);
 
-		assert.equal(emitter.behaviours.getAll().length, 2);
+		assert.equal(emitter.behaviours.getAll().length, 3);
+		assert.instanceOf(emitter.behaviours.getAll()[0], LifeBehaviour);
+		assert.instanceOf(emitter.behaviours.getAll()[1], PositionBehaviour);
+		assert.instanceOf(emitter.behaviours.getAll()[2], ColorBehaviour);
 	});
 });

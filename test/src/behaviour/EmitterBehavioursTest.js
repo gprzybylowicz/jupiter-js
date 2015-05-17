@@ -64,12 +64,12 @@ describe("EmitterBehavioursTest", function() {
 		behaviours.add(normal);
 
 		behaviours.init(new Particle());
-		assert.ok(spyLow.calledBefore(spyNormal));
-		assert.ok(spyNormal.calledBefore(spyHigh));
+		assert.ok(spyHigh.calledBefore(spyNormal));
+		assert.ok(spyNormal.calledBefore(spyLow));
 
 		behaviours.init(new Particle());
-		assert.ok(spyLow.calledBefore(spyNormal));
-		assert.ok(spyNormal.calledBefore(spyHigh));
+		assert.ok(spyHigh.calledBefore(spyNormal));
+		assert.ok(spyNormal.calledBefore(spyLow));
 
 		spyLow.restore();
 		spyNormal.restore();
@@ -93,8 +93,8 @@ describe("EmitterBehavioursTest", function() {
 		behaviours.add(normal);
 
 		behaviours.apply(new Particle(), 0);
-		assert.ok(spyLow.calledBefore(spyNormal));
-		assert.ok(spyNormal.calledBefore(spyHigh));
+		assert.ok(spyHigh.calledBefore(spyNormal));
+		assert.ok(spyNormal.calledBefore(spyLow));
 
 		spyLow.restore();
 		spyNormal.restore();

@@ -15,7 +15,7 @@ EmitterBehaviours.prototype.add = function(behaviour) {
 	this.behaviours.push(behaviour);
 
 	this.behaviours.sort(function(a, b) {
-		return a.priority - b.priority;
+		return b.priority - a.priority;
 	});
 
 };
