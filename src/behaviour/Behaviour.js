@@ -1,5 +1,5 @@
 var Random = require("../util").Random;
-var BehaviourParser = require("../config").BehaviourParser;
+var BehaviourParser = require("../parser/BehaviourParser.js");
 
 function Behaviour() {
 	this.priority = 0;

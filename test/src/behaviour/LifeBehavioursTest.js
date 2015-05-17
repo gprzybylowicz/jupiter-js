@@ -1,7 +1,7 @@
 var LifeBehaviour = require("jupiter").LifeBehaviour;
 var Particle = require("jupiter").Particle;
 var MathUtil = require("jupiter").Math;
-var BehaviourParser = require("jupiter").config.BehaviourParser;
+var BehaviourParser = require("jupiter").BehaviourParser;
 
 describe("LifeBehaviourTest", function() {
 

@@ -1,5 +1,4 @@
 var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
-var LifeBehaviour = require("../behaviour").LifeBehaviour;
 var ParticlePool = require("../ParticlePool.js");
 var List = require("../util").List;
 var DefaultEmitController = require("../controller").DefaultEmitController;

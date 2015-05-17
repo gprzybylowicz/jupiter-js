@@ -1,5 +1,5 @@
 var Behaviour = require("jupiter").Behaviour;
-var BehaviourParser = require("jupiter").config.BehaviourParser;
+var BehaviourParser = require("jupiter").BehaviourParser;
 
 describe("BehaviourTest", function() {
 

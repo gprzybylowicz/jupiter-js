@@ -1,6 +1,6 @@
 var Behaviour = require("./Behaviour.js");
 var Point = require("../util").Point;
-var BehaviourParser = require("../config").BehaviourParser;
+var BehaviourParser = require("../parser/BehaviourParser.js");
 
 PositionBehaviour.DEFAULT_PRIORITY = 100;
 

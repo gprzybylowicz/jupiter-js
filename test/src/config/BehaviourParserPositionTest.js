@@ -1,18 +1,18 @@
 var PositionBehaviour = require("jupiter").PositionBehaviour;
 var Point = require("jupiter").Point;
 
-describe("BehaviourParserTest", function() {
+describe("BehaviourParserPositionTest", function() {
 
 	var TARGET_CONFIG = {
-		PositionBehaviour: {
-			priority: PositionBehaviour.DEFAULT_PRIORITY,
-			position: {x: 2, y: 3},
-			positionVariance: {x: 3, y: 4},
-			velocity: {x: 10, y: 11},
-			velocityVariance: {x: 20, y: 21},
-			acceleration: {x: 30, y: 31},
-			accelerationVariance: {x: 40, y: 41}
-		}
+		type: "PositionBehaviour",
+		priority: PositionBehaviour.DEFAULT_PRIORITY,
+		position: {x: 2, y: 3},
+		positionVariance: {x: 3, y: 4},
+		velocity: {x: 10, y: 11},
+		velocityVariance: {x: 20, y: 21},
+		acceleration: {x: 30, y: 31},
+		accelerationVariance: {x: 40, y: 41}
+
 	};
 
 	it("write", function() {
@@ -24,14 +24,13 @@ describe("BehaviourParserTest", function() {
 		behaviour.acceleration.set(30, 31);
 		behaviour.accelerationVariance.set(40, 41);
 
-		var config = {};
-		behaviour.getConfigParser().write(config);
+		var config = behaviour.getConfigParser().write();
 		assert.deepEqual(config, TARGET_CONFIG);
 	});
 
 	it("read", function() {
 		var behaviour = new PositionBehaviour();
-		behaviour.getConfigParser().read(TARGET_CONFIG.PositionBehaviour);
+		behaviour.getConfigParser().read(TARGET_CONFIG);
 
 		assert.deepEqual(behaviour.position, new Point(2, 3));
 		assert.deepEqual(behaviour.positionVariance, new Point(3, 4));

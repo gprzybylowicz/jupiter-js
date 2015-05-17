@@ -6,8 +6,10 @@ function BehaviourParser(behaviour, type) {
 	this._type = type;
 }
 
-BehaviourParser.prototype.write = function(config) {
-	config[this._type] = JSON.parse(JSON.stringify(this._behaviour));
+BehaviourParser.prototype.write = function() {
+	var config = JSON.parse(JSON.stringify(this._behaviour));
+	config.type = this._type;
+	return config;
 };
 
 BehaviourParser.prototype.read = function(config) {

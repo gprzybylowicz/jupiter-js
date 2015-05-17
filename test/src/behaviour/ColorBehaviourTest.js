@@ -1,5 +1,5 @@
 var ColorBehaviour = require("jupiter").ColorBehaviour;
-var BehaviourParser = require("jupiter").config.BehaviourParser;
+var BehaviourParser = require("jupiter").BehaviourParser;
 
 describe("ColorBehaviourTest", function() {
 

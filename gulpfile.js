@@ -46,6 +46,7 @@ gulp.task("browserify:standalone", ["jshint"], function() {
 gulp.task("browserify:test", ["jshint"], function() {
 	var test = options.test || "*";
 	var files = glob.sync("./test/src/**/" + test + ".js");
+	//var files = files.concat(glob.sync("./src/*.js"));
 	var b = browserify({
 		entries: files.concat(["./test/src/index.js"]),
 		insertGlobals: true

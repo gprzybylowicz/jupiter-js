@@ -1,6 +1,6 @@
 var PositionBehaviour = require("jupiter").PositionBehaviour;
 var Particle = require("jupiter").Particle;
-var BehaviourParser = require("jupiter").config.BehaviourParser;
+var BehaviourParser = require("jupiter").BehaviourParser;
 
 describe("PositionBehaviourTest", function() {
 
