@@ -15,6 +15,8 @@ ConfigParser.prototype.write = function(emitter) {
 		config.behaviours.push(behaviourConfig);
 	}
 
+	//todo: it's temporary solution - emit controller should have dedicated parser
+	config.emitController = JSON.parse(JSON.stringify(emitter.emitController));
 	return config;
 };
 
@@ -29,6 +31,10 @@ ConfigParser.prototype.read = function(config) {
 		behaviour.getConfigParser().read(emitterBehavious[i]);
 		emitter.behaviours.add(behaviour);
 	}
+
+	//todo: it's temporaty solution - see above (line 18)
+	emitter.emitController.maxLife = config.emitController._maxLife;
+	emitter.emitController.maxParticles = config.emitController._maxParticles;
 
 	return emitter;
 };

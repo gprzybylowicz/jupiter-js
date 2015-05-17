@@ -2,17 +2,17 @@ function DefaultEmitContoller() {
 	this._maxParticles = 0;
 	this._maxLife = 1;
 	this._emitPerSecond = 0;
-	this._fames = 0;
+	this._frames = 0;
 }
 
 DefaultEmitContoller.prototype.howMany = function(deltaTime) {
 	var ratio = this._emitPerSecond * deltaTime;
-	this._fames += ratio;
+	this._frames += ratio;
 
 	var numberToEmit = 0;
-	if (this._fames >= 1.0) {
-		numberToEmit = Math.round(this._fames);
-		this._fames = 0;
+	if (this._frames >= 1.0) {
+		numberToEmit = Math.round(this._frames);
+		this._frames = 0;
 	}
 	return numberToEmit;
 };

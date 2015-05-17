@@ -31,7 +31,7 @@ describe("ConfigParserTest", function() {
 
 	it("read - no behaviours", function() {
 		var parser = new ConfigParser();
-		var config = {behaviours: []};
+		var config = {behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}};
 		var emitter = parser.read(config);
 
 		assert.instanceOf(emitter, Emitter);
@@ -40,7 +40,8 @@ describe("ConfigParserTest", function() {
 
 	it("read - with behaviours", function() {
 		var parser = new ConfigParser();
-		var config = {behaviours: []};
+		var config = {behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}};
+
 		config.behaviours.push(new LifeBehaviour().getConfigParser().write());
 		config.behaviours.push(new PositionBehaviour().getConfigParser().write());
 		config.behaviours.push(new ColorBehaviour().getConfigParser().write());
@@ -50,5 +51,25 @@ describe("ConfigParserTest", function() {
 		assert.instanceOf(emitter.behaviours.getAll()[0], LifeBehaviour);
 		assert.instanceOf(emitter.behaviours.getAll()[1], PositionBehaviour);
 		assert.instanceOf(emitter.behaviours.getAll()[2], ColorBehaviour);
+	});
+
+	it("write - emit controller", function() {
+		var parser = new ConfigParser();
+		var emitter = new Emitter();
+		emitter.emitController.maxParticles = 20;
+		emitter.emitController.maxLife = 2.2;
+		var config = parser.write(emitter);
+
+		assert.equal(config.emitController._maxParticles, 20);
+		assert.equal(config.emitController._maxLife, 2.2);
+	});
+
+	it("read - emit controller", function() {
+		var parser = new ConfigParser();
+		var config = {behaviours: [], emitController: {_maxLife: 2.25, _maxParticles: 159}};
+		var emitter = parser.read(config);
+
+		assert.equal(emitter.emitController._maxParticles, 159);
+		assert.equal(emitter.emitController._maxLife, 2.25);
 	});
 });
