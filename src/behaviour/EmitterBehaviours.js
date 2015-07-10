@@ -6,6 +6,10 @@ EmitterBehaviours.prototype.getAll = function() {
 	return this.behaviours;
 };
 
+EmitterBehaviours.prototype.isEmpty = function() {
+	return this.getAll().length === 0;
+};
+
 EmitterBehaviours.prototype.add = function(behaviour) {
 	for (var i = 0; i < this.behaviours.length; ++i) {
 		if (this.behaviours[i] === behaviour) {
@@ -18,6 +22,7 @@ EmitterBehaviours.prototype.add = function(behaviour) {
 		return b.priority - a.priority;
 	});
 
+	return behaviour;
 };
 
 EmitterBehaviours.prototype.init = function(particle) {

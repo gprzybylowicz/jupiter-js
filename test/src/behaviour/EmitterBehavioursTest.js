@@ -20,6 +20,11 @@ describe("EmitterBehavioursTest", function() {
 		assert.equal(behaviours.getAll().length, 2);
 	});
 
+	it("add - return added behaviour", function() {
+		var behaviour = new Behaviour();
+		assert.ok(behaviour === behaviours.add(behaviour));
+	});
+
 	it("init ", function() {
 		var behaviour = new Behaviour();
 		var fakeParticle = new Particle();
@@ -99,6 +104,13 @@ describe("EmitterBehavioursTest", function() {
 		spyLow.restore();
 		spyNormal.restore();
 		spyHigh.restore();
+	});
+
+	it("isEmpty", function(){
+		assert.ok(behaviours.isEmpty());
+
+		behaviours.add(new Behaviour());
+		assert.notOk(behaviours.isEmpty());
 	});
 
 });

@@ -2,6 +2,7 @@ var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
 var ParticlePool = require("../ParticlePool.js");
 var List = require("../util").List;
 var DefaultEmitController = require("../controller").DefaultEmitController;
+var EmitterParser = require("../parser").EmitterParser;
 
 function Emitter(observer) {
 	this.list = new List();
@@ -55,5 +56,8 @@ Emitter.prototype.updateParticle = function(particle, deltaTime) {
 	}
 };
 
+Emitter.prototype.getParser = function() {
+	return new EmitterParser(this);
+};
 
 module.exports = Emitter;

@@ -10,8 +10,7 @@ ConfigParser.prototype.write = function(emitter) {
 	var emitterBehavious = emitter.behaviours.getAll();
 
 	for (var i = 0; i < emitterBehavious.length; i++) {
-		var behaviourConfig = {};
-		emitterBehavious[i].getConfigParser().write(behaviourConfig);
+		var behaviourConfig = emitterBehavious[i].getConfigParser().write();
 		config.behaviours.push(behaviourConfig);
 	}
 
@@ -35,6 +34,7 @@ ConfigParser.prototype.read = function(config) {
 	//todo: it's temporaty solution - see above (line 18)
 	emitter.emitController.maxLife = config.emitController._maxLife;
 	emitter.emitController.maxParticles = config.emitController._maxParticles;
+	emitter.emitController.emitPerSecond = config.emitController._emitPerSecond;
 
 	return emitter;
 };

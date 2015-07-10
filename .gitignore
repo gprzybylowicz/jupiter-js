@@ -1,3 +1,3 @@
 node_modules/*
-test/runner/index.test.js
+test/bin/*
 bin/
