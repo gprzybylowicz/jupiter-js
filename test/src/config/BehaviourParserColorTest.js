@@ -4,7 +4,7 @@ var Color = require("jupiter").Color;
 describe("BehaviourParserColorTest", function() {
 
 	var TARGET_CONFIG = {
-		type: "ColorBehaviour",
+		name: "ColorBehaviour",
 		priority: 0,
 		start: {_r: 100, _g: 200, _b: 0, _alpha: 0},
 		end: {_r: 1, _g: 2, _b: 3, _alpha: 0.7},
@@ -19,13 +19,13 @@ describe("BehaviourParserColorTest", function() {
 		behaviour.startVariance.set(10, 20, 30, 1);
 		behaviour.endVariance.set(0, 0, 0, 0.5);
 
-		var config = behaviour.getConfigParser().write();
+		var config = behaviour.getParser().write();
 		assert.deepEqual(config, TARGET_CONFIG);
 	});
 
 	it("read from config", function() {
 		var behaviour = new ColorBehaviour();
-		behaviour.getConfigParser().read(TARGET_CONFIG);
+		behaviour.getParser().read(TARGET_CONFIG);
 
 		assert.deepEqual(behaviour.start, new Color(100, 200, 0, 0));
 		assert.deepEqual(behaviour.end, new Color(1, 2, 3, 0.7));

@@ -10,7 +10,7 @@ EmitterParser.prototype.write = function() {
 	var emitterBehavious = this.emitter.behaviours.getAll();
 
 	for (var i = 0; i < emitterBehavious.length; i++) {
-		var behaviourConfig = emitterBehavious[i].getConfigParser().write();
+		var behaviourConfig = emitterBehavious[i].getParser().write();
 		config.behaviours.push(behaviourConfig);
 	}
 
@@ -24,9 +24,9 @@ EmitterParser.prototype.read = function(config) {
 	var alwaysCreate = this.emitter.behaviours.isEmpty();
 
 	for (var i = 0; i < behavioursConfig.length; i++) {
-		var type = behavioursConfig[i].type;
-		var behaviour = alwaysCreate ? this.createBehaviour(type) : this.getExistingOrCreate(type);
-		behaviour.getConfigParser().read(behavioursConfig[i]);
+		var name = behavioursConfig[i].name;
+		var behaviour = alwaysCreate ? this.createBehaviour(name) : this.getExistingOrCreate(name);
+		behaviour.getParser().read(behavioursConfig[i]);
 	}
 
 	//todo: it's temporaty solution - see above (line 18)
@@ -37,19 +37,19 @@ EmitterParser.prototype.read = function(config) {
 	return this.emitter;
 };
 
-EmitterParser.prototype.getExistingOrCreate = function(type) {
+EmitterParser.prototype.getExistingOrCreate = function(name) {
 	var behaviours = this.emitter.behaviours.getAll();
 	for (var i = 0; i < behaviours.length; i++) {
-		if (behaviours[i].type === type) {
+		if (behaviours[i].getName() === name) {
 			return behaviours[i];
 		}
 	}
 
-	return this.createBehaviour(type);
+	return this.createBehaviour(name);
 };
 
-EmitterParser.prototype.createBehaviour = function(type) {
-	return this.emitter.behaviours.add(new behaviours[type]);
+EmitterParser.prototype.createBehaviour = function(name) {
+	return this.emitter.behaviours.add(new behaviours[name]);
 };
 
 module.exports = EmitterParser;

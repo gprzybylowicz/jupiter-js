@@ -62,9 +62,9 @@ describe("PositionBehaviourTest", function() {
 		assert.equal(particle.position.y, startY + velocityY * DELTA_TIME);
 	});
 
-	it("getConfigParser return position config parser", function() {
+	it("getParser return position config parser", function() {
 		var behaviour = new PositionBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
+		assert.instanceOf(behaviour.getParser(), BehaviourParser);
 	});
 
 });

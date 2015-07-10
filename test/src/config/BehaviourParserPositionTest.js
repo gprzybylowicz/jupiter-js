@@ -4,7 +4,7 @@ var Point = require("jupiter").Point;
 describe("BehaviourParserPositionTest", function() {
 
 	var TARGET_CONFIG = {
-		type: "PositionBehaviour",
+		name: "PositionBehaviour",
 		priority: PositionBehaviour.DEFAULT_PRIORITY,
 		position: {x: 2, y: 3},
 		positionVariance: {x: 3, y: 4},
@@ -24,13 +24,13 @@ describe("BehaviourParserPositionTest", function() {
 		behaviour.acceleration.set(30, 31);
 		behaviour.accelerationVariance.set(40, 41);
 
-		var config = behaviour.getConfigParser().write();
+		var config = behaviour.getParser().write();
 		assert.deepEqual(config, TARGET_CONFIG);
 	});
 
 	it("read", function() {
 		var behaviour = new PositionBehaviour();
-		behaviour.getConfigParser().read(TARGET_CONFIG);
+		behaviour.getParser().read(TARGET_CONFIG);
 
 		assert.deepEqual(behaviour.position, new Point(2, 3));
 		assert.deepEqual(behaviour.positionVariance, new Point(3, 4));

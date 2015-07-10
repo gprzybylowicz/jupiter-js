@@ -89,9 +89,9 @@ describe("SizeBehaviourTest", function() {
 		checkAfterApply(1, 12);
 	});
 
-	it("getConfigParser return size config parser", function() {
+	it("getParser return size config parser", function() {
 		var behaviour = new SizeBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
+		assert.instanceOf(behaviour.getParser(), BehaviourParser);
 	});
 
 });

@@ -1,6 +1,5 @@
 var Behaviour = require("./Behaviour.js");
 var Point = require("../util").Point;
-var BehaviourParser = require("../parser/BehaviourParser.js");
 
 SizeBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -47,8 +46,8 @@ SizeBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.size.y += (particle.sizeEnd.y - particle.sizeStart.y) * particle.lifeProgress;
 };
 
-SizeBehaviour.prototype.getConfigParser = function() {
-	return new BehaviourParser(this, "SizeBehaviour");
+SizeBehaviour.prototype.getName = function() {
+	return "SizeBehaviour";
 };
 
 module.exports = SizeBehaviour;

@@ -3,9 +3,9 @@ var BehaviourParser = require("jupiter").BehaviourParser;
 
 describe("ColorBehaviourTest", function() {
 
-	it("getConfigParser return color config parser", function() {
+	it("getParser return color config parser", function() {
 		var behaviour = new ColorBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
+		assert.instanceOf(behaviour.getParser(), BehaviourParser);
 	});
 
 });

@@ -19,8 +19,12 @@ Behaviour.prototype.varianceFrom = function(value) {
 	return Random.uniform(-1.0, 1.0) * value;
 };
 
-Behaviour.prototype.getConfigParser = function() {
-	return new BehaviourParser(this, "Behaviour");
+Behaviour.prototype.getName = function() {
+	throw new Error("This method has to be overridden in subclass");
+};
+
+Behaviour.prototype.getParser = function() {
+	return new BehaviourParser(this);
 };
 
 module.exports = Behaviour;

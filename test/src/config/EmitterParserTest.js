@@ -23,8 +23,8 @@ describe("EmitterParserTest", function() {
 		var config = parser.write(emitter);
 
 		var target = [{}, {}];
-		target[1] = new PositionBehaviour().getConfigParser().write();
-		target[0] = new LifeBehaviour().getConfigParser().write();
+		target[1] = new PositionBehaviour().getParser().write();
+		target[0] = new LifeBehaviour().getParser().write();
 
 		assert.deepEqual(config.behaviours, target);
 	});
@@ -50,9 +50,9 @@ describe("EmitterParserTest", function() {
 		var parser = new EmitterParser(new Emitter());
 		var config = {behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}};
 
-		config.behaviours.push(new LifeBehaviour().getConfigParser().write());
-		config.behaviours.push(new PositionBehaviour().getConfigParser().write());
-		config.behaviours.push(new ColorBehaviour().getConfigParser().write());
+		config.behaviours.push(new LifeBehaviour().getParser().write());
+		config.behaviours.push(new PositionBehaviour().getParser().write());
+		config.behaviours.push(new ColorBehaviour().getParser().write());
 		var emitter = parser.read(config);
 
 		assert.equal(emitter.behaviours.getAll().length, 3);

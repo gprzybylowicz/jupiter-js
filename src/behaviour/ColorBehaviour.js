@@ -1,6 +1,5 @@
 var Behaviour = require("./Behaviour.js");
 var Color = require("../util").Color;
-var BehaviourParser = require("../parser/BehaviourParser.js");
 
 ColorBehaviour.DEFAULT_PRIORITY = 0;
 
@@ -46,8 +45,8 @@ ColorBehaviour.prototype.apply = function(particle, deltaTime) {
 
 };
 
-ColorBehaviour.prototype.getConfigParser = function() {
-	return new BehaviourParser(this, "ColorBehaviour");
+ColorBehaviour.prototype.getName = function() {
+	return "ColorBehaviour";
 };
 
 module.exports = ColorBehaviour;

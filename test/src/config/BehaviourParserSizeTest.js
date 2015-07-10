@@ -4,7 +4,7 @@ var Point = require("jupiter").Point;
 describe("BehaviourParserSizeTest", function() {
 
 	var TARGET_CONFIG = {
-		type: "SizeBehaviour",
+		name: "SizeBehaviour",
 		priority: SizeBehaviour.DEFAULT_PRIORITY,
 		allowNegativeValues: true,
 		sizeStart: {x: 10, y: 20},
@@ -22,13 +22,13 @@ describe("BehaviourParserSizeTest", function() {
 		behaviour.startVariance = 55;
 		behaviour.endVariance = 66;
 
-		var config = behaviour.getConfigParser().write();
+		var config = behaviour.getParser().write();
 		assert.deepEqual(config, TARGET_CONFIG);
 	});
 
 	it("read", function() {
 		var behaviour = new SizeBehaviour();
-		behaviour.getConfigParser().read(TARGET_CONFIG);
+		behaviour.getParser().read(TARGET_CONFIG);
 
 		assert.ok(behaviour.allowNegativeValues);
 		assert.deepEqual(behaviour.sizeStart, new Point(10, 20));

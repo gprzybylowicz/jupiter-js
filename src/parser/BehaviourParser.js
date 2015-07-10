@@ -1,14 +1,13 @@
 var Point = require("../util").Point;
 var Color = require("../util").Color;
 
-function BehaviourParser(behaviour, type) {
+function BehaviourParser(behaviour) {
 	this._behaviour = behaviour;
-	this._type = type;
 }
 
 BehaviourParser.prototype.write = function() {
 	var config = JSON.parse(JSON.stringify(this._behaviour));
-	config.type = this._type;
+	config.name = this._behaviour.getName();
 	return config;
 };
 

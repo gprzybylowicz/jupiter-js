@@ -58,8 +58,8 @@ describe("LifeBehaviourTest", function() {
 
 	});
 
-	it("getConfigParser return life config parser", function() {
+	it("getParser return life config parser", function() {
 		var behaviour = new LifeBehaviour();
-		assert.instanceOf(behaviour.getConfigParser(), BehaviourParser);
+		assert.instanceOf(behaviour.getParser(), BehaviourParser);
 	});
 });
