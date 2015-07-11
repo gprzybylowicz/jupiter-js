@@ -3,5 +3,6 @@ module.exports = {
 	Point: require("./Point.js"),
 	List: require("./List.js"),
 	Math: require("./Math.js"),
-	Random: require("./Random.js")
+	Random: require("./Random.js"),
+	inherit: require("./inherit.js")
 };

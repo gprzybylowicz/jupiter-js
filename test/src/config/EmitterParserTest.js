@@ -3,8 +3,14 @@ var Emitter = require("jupiter").Emitter;
 var LifeBehaviour = require("jupiter").LifeBehaviour;
 var PositionBehaviour = require("jupiter").PositionBehaviour;
 var ColorBehaviour = require("jupiter").ColorBehaviour;
+var SizeBehaviour = require("jupiter").SizeBehaviour;
 
 describe("EmitterParserTest", function() {
+
+	it("get parser from emitter", function() {
+		var emitter = new Emitter();
+		assert.instanceOf(emitter.getParser(), EmitterParser);
+	});
 
 	it("read empty config", function() {
 		var parser = new EmitterParser(new Emitter());
@@ -46,7 +52,31 @@ describe("EmitterParserTest", function() {
 		assert.ok(emitter.behaviours.isEmpty());
 	});
 
-	it("read - with behaviours", function() {
+	it("write - emit controller", function() {
+		var emitter = new Emitter();
+		var parser = new EmitterParser(emitter);
+		emitter.emitController.maxParticles = 20;
+		emitter.emitController.maxLife = 2.2;
+		var config = parser.write();
+
+		assert.equal(config.emitController._maxParticles, 20);
+		assert.equal(config.emitController._maxLife, 2.2);
+	});
+
+	it("read - emit controller replace old values", function() {
+		var emitter = new Emitter();
+		var parser = new EmitterParser(emitter);
+
+		emitter.emitController.maxParticles = 45;
+		emitter.emitController.maxLife = 555;
+
+		parser.read({behaviours: [], emitController: {_maxLife: 2.25, _maxParticles: 159}});
+
+		assert.equal(emitter.emitController._maxParticles, 159);
+		assert.equal(emitter.emitController._maxLife, 2.25);
+	});
+
+	it("read - crate new behaviours based on config", function() {
 		var parser = new EmitterParser(new Emitter());
 		var config = {behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}};
 
@@ -61,23 +91,35 @@ describe("EmitterParserTest", function() {
 		assert.instanceOf(emitter.behaviours.getAll()[2], ColorBehaviour);
 	});
 
-	it("write - emit controller", function() {
+	it("read - no behaviours in config so parser should remove any existing behavior", function() {
 		var emitter = new Emitter();
-		var parser = new EmitterParser(emitter);
-		emitter.emitController.maxParticles = 20;
-		emitter.emitController.maxLife = 2.2;
-		var config = parser.write();
+		var behaviours = [new LifeBehaviour(), new PositionBehaviour(), new SizeBehaviour(), new ColorBehaviour()];
+		for (var i = 0; i < behaviours.length; i++) {
+			emitter.behaviours.add(behaviours[i]);
+		}
 
-		assert.equal(config.emitController._maxParticles, 20);
-		assert.equal(config.emitController._maxLife, 2.2);
+		emitter.getParser().read({behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}});
+
+		assert.ok(emitter.behaviours.isEmpty());
 	});
 
-	it("read - emit controller", function() {
-		var parser = new EmitterParser(new Emitter());
-		var config = {behaviours: [], emitController: {_maxLife: 2.25, _maxParticles: 159}};
-		var emitter = parser.read(config);
+	it("read - use existing behaviours", function() {
+		var emitter = new Emitter();
+		var behaviours = [new LifeBehaviour(), new PositionBehaviour(), new SizeBehaviour(), new ColorBehaviour()];
+		for (var i = 0; i < behaviours.length; i++) {
+			emitter.behaviours.add(behaviours[i]);
+		}
 
-		assert.equal(emitter.emitController._maxParticles, 159);
-		assert.equal(emitter.emitController._maxLife, 2.25);
+		var config = {behaviours: [], emitController: {_maxLife: 1, _maxParticles: 1}};
+		config.behaviours.push(new LifeBehaviour().getParser().write());
+		config.behaviours.push(new PositionBehaviour().getParser().write());
+		config.behaviours.push(new ColorBehaviour().getParser().write());
+		emitter.getParser().read(config);
+
+		assert.equal(emitter.behaviours.getAll().length, 3);
+		assert.ok(emitter.behaviours.getAll()[0] === behaviours[0]);
+		assert.ok(emitter.behaviours.getAll()[1] === behaviours[1]);
+		assert.ok(emitter.behaviours.getAll()[2] === behaviours[3]);
 	});
+
 });

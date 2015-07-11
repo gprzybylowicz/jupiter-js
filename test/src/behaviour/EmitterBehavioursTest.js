@@ -1,9 +1,21 @@
 var EmitterBehaviours = require("jupiter").EmitterBehaviours;
 var Behaviour = require("jupiter").Behaviour;
 var Particle = require("jupiter").Particle;
+var inherit = require("jupiter").inherit;
+
+function FakeBehaviour() {
+	Behaviour.call(this);
+}
+
+inherit(FakeBehaviour, Behaviour);
+
+FakeBehaviour.counter = 0;
+
+FakeBehaviour.prototype.getName = function() {
+	return "FakeBehaviours" + FakeBehaviour.counter++;
+};
 
 describe("EmitterBehavioursTest", function() {
-
 	var behaviours;
 
 	beforeEach(function() {
@@ -13,20 +25,20 @@ describe("EmitterBehavioursTest", function() {
 	it("add", function() {
 		assert.equal(behaviours.getAll().length, 0);
 
-		behaviours.add(new Behaviour());
+		behaviours.add(new FakeBehaviour());
 		assert.equal(behaviours.getAll().length, 1);
 
-		behaviours.add(new Behaviour());
+		behaviours.add(new FakeBehaviour());
 		assert.equal(behaviours.getAll().length, 2);
 	});
 
 	it("add - return added behaviour", function() {
-		var behaviour = new Behaviour();
+		var behaviour = new FakeBehaviour();
 		assert.ok(behaviour === behaviours.add(behaviour));
 	});
 
 	it("init ", function() {
-		var behaviour = new Behaviour();
+		var behaviour = new FakeBehaviour();
 		var fakeParticle = new Particle();
 		var spy = sinon.spy(behaviour, "init");
 
@@ -39,7 +51,7 @@ describe("EmitterBehavioursTest", function() {
 	});
 
 	it("apply ", function() {
-		var behaviour = new Behaviour();
+		var behaviour = new FakeBehaviour();
 		var fakeParticle = new Particle();
 		var spy = sinon.spy(behaviour, "apply");
 
@@ -53,9 +65,9 @@ describe("EmitterBehavioursTest", function() {
 	});
 
 	it("init - priority ", function() {
-		var low = new Behaviour();
-		var normal = new Behaviour();
-		var high = new Behaviour();
+		var low = new FakeBehaviour();
+		var normal = new FakeBehaviour();
+		var high = new FakeBehaviour();
 
 		low.priority = -10;
 		high.priority = 20;
@@ -82,9 +94,9 @@ describe("EmitterBehavioursTest", function() {
 	});
 
 	it("apply - priority ", function() {
-		var low = new Behaviour();
-		var normal = new Behaviour();
-		var high = new Behaviour();
+		var low = new FakeBehaviour();
+		var normal = new FakeBehaviour();
+		var high = new FakeBehaviour();
 
 		low.priority = -10;
 		high.priority = 20;
@@ -106,7 +118,7 @@ describe("EmitterBehavioursTest", function() {
 		spyHigh.restore();
 	});
 
-	it("isEmpty", function(){
+	it("isEmpty", function() {
 		assert.ok(behaviours.isEmpty());
 
 		behaviours.add(new Behaviour());

@@ -3,12 +3,17 @@ var jupiter = {
 	ParticlePool: require("./ParticlePool.js")
 };
 
-require("./polyfill");
-
-Object.assign(jupiter, require("./parser"));
-Object.assign(jupiter, require("./controller"));
-Object.assign(jupiter, require("./behaviour"));
-Object.assign(jupiter, require("./util"));
-Object.assign(jupiter, require("./emitter"));
-
 module.exports = jupiter;
+
+require("./polyfill");
+var controller = require("./controller");
+var behaviour = require("./behaviour");
+var util = require("./util");
+var emitter = require("./emitter");
+var parser = require("./parser");
+
+Object.assign(jupiter, parser);
+Object.assign(jupiter, controller);
+Object.assign(jupiter, behaviour);
+Object.assign(jupiter, util);
+Object.assign(jupiter, emitter);

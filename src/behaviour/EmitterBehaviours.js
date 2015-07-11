@@ -10,9 +10,13 @@ EmitterBehaviours.prototype.isEmpty = function() {
 	return this.getAll().length === 0;
 };
 
+EmitterBehaviours.prototype.clear = function() {
+	this.behaviours = [];
+};
+
 EmitterBehaviours.prototype.add = function(behaviour) {
 	for (var i = 0; i < this.behaviours.length; ++i) {
-		if (this.behaviours[i] === behaviour) {
+		if (this.behaviours[i].getName() === behaviour.getName()) {
 			throw new Error("Emitter duplicate");
 		}
 	}
