@@ -16,8 +16,22 @@ var runSequence = require('run-sequence');
 
 var options = minimist(process.argv.slice(2));
 
+function getBuildType() {
+	var rendererType = options.renderer || "default";
+
+	var types = {
+		default: {src: "./src/engine/index.js", bin: "./bin", name: "jupiter.js"},
+		pixi: {src: "./src/renderer/pixi/index.js", bin: "./bin/pixi", name: "jupiter_pixi.js"}
+	};
+
+	return types[rendererType];
+}
+
+console.log("BUILD TYPE DATA", getBuildType());
+
 gulp.task("clean", function() {
-	del(["bin/*"]);
+	var build = getBuildType();
+	del([build.bin + "/*.js", build.bin + "/*.map"]);
 });
 
 gulp.task('jshint', function() {
@@ -28,19 +42,21 @@ gulp.task('jshint', function() {
 });
 
 gulp.task("browserify:standalone", ["jshint"], function() {
+	var build = getBuildType();
+
 	var b = browserify({
-		entries: "./src/index.js",
+		entries: build.src,
 		debug: true,
 		standalone: "jupiter"
 	});
 
 	return b.bundle()
-		.pipe(source("./src/index.js"))
-		.pipe(rename("jupiter.js"))
+		.pipe(source(build.src))
+		.pipe(rename(build.name))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({loadMaps: true})).on("error", gutil.log)
 		.pipe(sourcemaps.write("./"))
-		.pipe(gulp.dest("./bin"))
+		.pipe(gulp.dest(build.bin))
 });
 
 gulp.task("browserify:test", ["jshint"], function() {
@@ -52,7 +68,7 @@ gulp.task("browserify:test", ["jshint"], function() {
 		insertGlobals: true
 	});
 
-	return b.require("./src/index.js", {expose: "jupiter"})
+	return b.require("./src/engine/index.js", {expose: "jupiter"})
 		.bundle()
 		.pipe(source("./test/src/ParticleTest.js"))
 		.pipe(rename("index.test.js"))

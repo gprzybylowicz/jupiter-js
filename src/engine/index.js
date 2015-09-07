@@ -5,7 +5,7 @@ var jupiter = {
 
 module.exports = jupiter;
 
-require("./polyfill");
+require("../polyfill");
 var controller = require("./controller");
 var behaviour = require("./behaviour");
 var util = require("./util");
