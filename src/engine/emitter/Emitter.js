@@ -24,6 +24,7 @@ Emitter.prototype.setObserver = function(observer) {
 	this.observer.onCreate = this.observer.onCreate || nullFunction;
 	this.observer.onUpdate = this.observer.onUpdate || nullFunction;
 	this.observer.onRemove = this.observer.onRemove || nullFunction;
+	this.observer.onEmitComplete = this.observer.onEmitComplete || nullFunction;
 
 };
 
@@ -35,6 +36,11 @@ Emitter.prototype.update = function(deltaTime) {
 	this.list.forEach(function(particle) {
 		this.updateParticle(particle, deltaTime);
 	}.bind(this));
+
+	if (this.emitController.isEnd()) {
+		this.observer.onEmitComplete();
+		this.play = false;
+	}
 };
 
 Emitter.prototype.createParticles = function(deltaTime) {

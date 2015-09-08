@@ -21,6 +21,8 @@ DefaultEmitContoller.prototype.howMany = function(deltaTime) {
 		numberToEmit = Math.round(this._frames);
 		this._frames = 0;
 	}
+
+	this._durationGuard.update(deltaTime);
 	return numberToEmit;
 };
 
