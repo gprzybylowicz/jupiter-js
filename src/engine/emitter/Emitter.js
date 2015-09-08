@@ -1,6 +1,7 @@
 module.exports = Emitter;
 
 var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
+var NullObserver = require("./NullObserver.js");
 var ParticlePool = require("../ParticlePool.js");
 var List = require("../util").List;
 var DefaultEmitController = require("../controller").DefaultEmitController;
@@ -17,15 +18,7 @@ function Emitter(observer) {
 }
 
 Emitter.prototype.setObserver = function(observer) {
-	var nullFunction = function() {
-	};
-
-	this.observer = observer || {};
-	this.observer.onCreate = this.observer.onCreate || nullFunction;
-	this.observer.onUpdate = this.observer.onUpdate || nullFunction;
-	this.observer.onRemove = this.observer.onRemove || nullFunction;
-	this.observer.onEmitComplete = this.observer.onEmitComplete || nullFunction;
-
+	this.observer = observer || new NullObserver();
 };
 
 Emitter.prototype.update = function(deltaTime) {
