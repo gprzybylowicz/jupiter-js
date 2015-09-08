@@ -1,9 +1,16 @@
+var util = require("../util");
+var EmitController = require("./EmitController.js");
+
 function DefaultEmitContoller() {
+	EmitController.call(this);
+
 	this._maxParticles = 0;
 	this._maxLife = 1;
 	this._emitPerSecond = 0;
 	this._frames = 0;
 }
+
+util.inherit(DefaultEmitContoller, EmitController);
 
 DefaultEmitContoller.prototype.howMany = function(deltaTime) {
 	var ratio = this._emitPerSecond * deltaTime;
