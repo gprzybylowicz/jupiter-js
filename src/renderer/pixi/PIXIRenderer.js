@@ -14,14 +14,12 @@ PIXIRenderer.prototype = Object.create(PIXI.Container.prototype);
 PIXIRenderer.prototype.constructor = PIXIRenderer;
 
 PIXIRenderer.prototype.play = function() {
-	//if (!this.emitter.play) {
-	this.emitter.play = true;
+	this.emitter.resetAndPlay();
 	PIXI.ticker.shared.add(this.update, this);
-	//}
 };
 
 PIXIRenderer.prototype.stop = function() {
-	this.emitter.play = false;
+	this.emitter.stop();
 	PIXI.ticker.shared.remove(this.update, this);
 };
 
@@ -68,6 +66,10 @@ PIXIRenderer.prototype.onRemove = function(particle) {
 	particle.sprite = null;
 	sprite.visible = false;
 	this.unusedSprites.push(sprite);
+};
+
+PIXIRenderer.prototype.onEmitComplete = function() {
+	this.stop();
 };
 
 module.exports = PIXIRenderer;

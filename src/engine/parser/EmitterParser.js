@@ -37,6 +37,9 @@ EmitterParser.prototype.read = function(config) {
 	this.emitter.emitController.maxParticles = config.emitController._maxParticles;
 	this.emitter.emitController.emitPerSecond = config.emitController._emitPerSecond;
 
+	var duration = !!config.emitController._durationGuard ? config.emitController._durationGuard.maxTime : -1;
+	this.emitter.emitController.duration = duration;
+
 	return this.emitter;
 };
 

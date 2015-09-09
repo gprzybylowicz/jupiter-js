@@ -12,9 +12,9 @@ function Emitter(observer) {
 	this.list = new List();
 	this.behaviours = new EmitterBehaviours();
 
-	this.play = true;
 	this.setObserver(observer);
 	this.emitController = new DefaultEmitController();
+	this.play();
 }
 
 Emitter.prototype.setObserver = function(observer) {
@@ -22,18 +22,22 @@ Emitter.prototype.setObserver = function(observer) {
 };
 
 Emitter.prototype.update = function(deltaTime) {
-	if (!this.play) return;
+	if (!this._play) return;
 
-	this.createParticles(deltaTime);
+	this.emitParticles(deltaTime);
+	this.updateParticles(deltaTime);
 
-	this.list.forEach(function(particle) {
-		this.updateParticle(particle, deltaTime);
-	}.bind(this));
-
-	if (this.emitController.isEnd()) {
+	if (this.emitController.isEnd() && this.list.isEmpty()) {
+		this.stop();
 		this.observer.onEmitComplete();
-		this.play = false;
 	}
+};
+
+Emitter.prototype.emitParticles = function(deltaTime) {
+	if (!this.emitController.isEnd()) {
+		this.createParticles(deltaTime);
+	}
+
 };
 
 Emitter.prototype.createParticles = function(deltaTime) {
@@ -44,6 +48,13 @@ Emitter.prototype.createParticles = function(deltaTime) {
 		this.behaviours.init(particle);
 		this.observer.onCreate(particle);
 	}
+};
+
+Emitter.prototype.updateParticles = function(deltaTime) {
+	this.list.forEach(function(particle) {
+		this.updateParticle(particle, deltaTime);
+	}.bind(this));
+
 };
 
 Emitter.prototype.updateParticle = function(particle, deltaTime) {
@@ -60,5 +71,18 @@ Emitter.prototype.updateParticle = function(particle, deltaTime) {
 
 Emitter.prototype.getParser = function() {
 	return new EmitterParser(this);
+};
+
+Emitter.prototype.play = function() {
+	this._play = true;
+};
+
+Emitter.prototype.resetAndPlay = function() {
+	this.emitController.reset();
+	this.play();
+};
+
+Emitter.prototype.stop = function() {
+	this._play = false;
 };
 
