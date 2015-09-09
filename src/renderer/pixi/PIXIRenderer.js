@@ -23,6 +23,10 @@ PIXIRenderer.prototype.stop = function() {
 	PIXI.ticker.shared.remove(this.update, this);
 };
 
+PIXIRenderer.prototype.reset = function() {
+	this.emitter.reset();
+};
+
 PIXIRenderer.prototype.update = function(dt) {
 	this.emitter.update(dt / 100);
 };

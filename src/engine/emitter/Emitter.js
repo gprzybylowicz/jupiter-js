@@ -59,14 +59,18 @@ Emitter.prototype.updateParticles = function(deltaTime) {
 
 Emitter.prototype.updateParticle = function(particle, deltaTime) {
 	if (particle.isDead()) {
-		this.observer.onRemove(particle);
-		this.list.remove(particle);
-		ParticlePool.global.push(particle);
+		this.removeParticle(particle);
 	}
 	else {
 		this.behaviours.apply(particle, deltaTime);
 		this.observer.onUpdate(particle);
 	}
+};
+
+Emitter.prototype.removeParticle = function(particle) {
+	this.observer.onRemove(particle);
+	this.list.remove(particle);
+	ParticlePool.global.push(particle);
 };
 
 Emitter.prototype.getParser = function() {
@@ -78,8 +82,15 @@ Emitter.prototype.play = function() {
 };
 
 Emitter.prototype.resetAndPlay = function() {
-	this.emitController.reset();
+	this.reset();
 	this.play();
+};
+
+Emitter.prototype.reset = function() {
+	this.emitController.reset();
+	this.list.forEach(function(particle) {
+		this.removeParticle(particle);
+	}.bind(this));
 };
 
 Emitter.prototype.stop = function() {
