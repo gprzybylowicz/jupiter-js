@@ -8,4 +8,8 @@ describe("BehaviourTest", function() {
 		assert.instanceOf(behaviour.getParser(), BehaviourParser);
 	});
 
+	it("varianceFrom return retturn 0 when no veriance", function() {
+		var behaviour = new Behaviour();
+		assert.equal(behaviour.varianceFrom(0), 0);
+	});
 });

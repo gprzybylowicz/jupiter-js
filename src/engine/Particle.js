@@ -22,8 +22,8 @@ function Particle() {
 	this.sizeEnd = new Point();
 
 	this.color = new Color(255, 255, 255, 1);
-	this.start = new Color();
-	this.end = new Color();
+	this.colorStart = new Color();
+	this.colorEnd = new Color();
 }
 
 Particle.prototype.isDead = function() {

@@ -4,21 +4,21 @@ function Color(r, g, b, alpha) {
 	this.r = r || 0;
 	this.g = g || 0;
 	this.b = b || 0;
-	this.alpha = alpha || 1;
+	this.alpha = alpha;
 }
 
 Color.prototype.copyFrom = function(color) {
 	this.r = color.r;
 	this.g = color.g;
 	this.b = color.b;
-	this.alpha = color.alpha || 1;
+	this.alpha = color.alpha;
 };
 
 Color.prototype.copyFromRawData = function(data) {
 	this.r = data._r;
 	this.g = data._g;
 	this.b = data._b;
-	this.alpha = data._alpha || 1;
+	this.alpha = data._alpha;
 };
 
 Color.prototype.add = function(color) {
@@ -81,6 +81,7 @@ Object.defineProperty(Color.prototype, "alpha", {
 		return this._alpha;
 	},
 	set: function(value) {
+		value = (value === undefined) ? 1 : value;
 		this._alpha = MathUtil.clamp(value, 0, 1);
 	}
 });

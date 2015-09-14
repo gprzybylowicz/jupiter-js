@@ -10,8 +10,8 @@ function ColorBehaviour() {
 
 	this.start = new Color();
 	this.end = new Color();
-	this.startVariance = new Color();
-	this.endVariance = new Color();
+	this.startVariance = new Color(0, 0, 0, 0);
+	this.endVariance = new Color(0, 0, 0, 0);
 }
 
 ColorBehaviour.prototype = Object.create(Behaviour.prototype);
@@ -20,28 +20,28 @@ ColorBehaviour.prototype.constructor = ColorBehaviour;
 ColorBehaviour.prototype.init = function(particle) {
 	//todo optimalization??
 
-	particle.start.copyFrom(this.start);
-	particle.start.r += this.varianceFrom(this.startVariance.r);
-	particle.start.g += this.varianceFrom(this.startVariance.g);
-	particle.start.b += this.varianceFrom(this.startVariance.b);
-	particle.start.alpha += this.varianceFrom(this.startVariance.alpha);
+	particle.colorStart.copyFrom(this.start);
+	particle.colorStart.r += this.varianceFrom(this.startVariance.r);
+	particle.colorStart.g += this.varianceFrom(this.startVariance.g);
+	particle.colorStart.b += this.varianceFrom(this.startVariance.b);
+	particle.colorStart.alpha += this.varianceFrom(this.startVariance.alpha);
 
-	particle.end.copyFrom(this.end);
-	particle.end.r += this.varianceFrom(this.endVariance.r);
-	particle.end.g += this.varianceFrom(this.endVariance.g);
-	particle.end.b += this.varianceFrom(this.endVariance.b);
-	particle.end.alpha += this.varianceFrom(this.endVariance.alpha);
+	particle.colorEnd.copyFrom(this.end);
+	particle.colorEnd.r += this.varianceFrom(this.endVariance.r);
+	particle.colorEnd.g += this.varianceFrom(this.endVariance.g);
+	particle.colorEnd.b += this.varianceFrom(this.endVariance.b);
+	particle.colorEnd.alpha += this.varianceFrom(this.endVariance.alpha);
 
-	particle.color.copyFrom(particle.start);
+	particle.color.copyFrom(particle.colorStart);
 };
 
 ColorBehaviour.prototype.apply = function(particle, deltaTime) {
-	particle.color.copyFrom(particle.start);
+	particle.color.copyFrom(particle.colorStart);
 
-	particle.color.r += (particle.end.r - particle.start.r) * particle.lifeProgress;
-	particle.color.g += (particle.end.g - particle.start.g) * particle.lifeProgress;
-	particle.color.b += (particle.end.b - particle.start.b) * particle.lifeProgress;
-	particle.color.alpha += (particle.end.alpha - particle.start.alpha) * particle.lifeProgress;
+	particle.color.r += (particle.colorEnd.r - particle.colorStart.r) * particle.lifeProgress;
+	particle.color.g += (particle.colorEnd.g - particle.colorStart.g) * particle.lifeProgress;
+	particle.color.b += (particle.colorEnd.b - particle.colorStart.b) * particle.lifeProgress;
+	particle.color.alpha += (particle.colorEnd.alpha - particle.colorStart.alpha) * particle.lifeProgress;
 
 };
 
