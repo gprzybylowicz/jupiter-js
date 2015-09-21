@@ -2,8 +2,8 @@ function Cache() {
 	this.data = {};
 }
 
-Cache.prototype.add = function(config) {
-	this.data[config.meta.name] = config;
+Cache.prototype.add = function(name, config) {
+	this.data[name] = config;
 };
 
 Cache.prototype.get = function(name) {
