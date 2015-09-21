@@ -16,7 +16,12 @@ EmitterParser.prototype.write = function() {
 
 	//todo: it's temporary solution - emit controller should have dedicated parser
 	config.emitController = JSON.parse(JSON.stringify(this.emitter.emitController));
+	config.meta = this.getMetadata();
 	return config;
+};
+
+EmitterParser.prototype.getMetadata = function() {
+	return {jupiter: "1.0.0"};
 };
 
 EmitterParser.prototype.read = function(config) {
