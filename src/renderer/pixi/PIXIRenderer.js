@@ -1,11 +1,13 @@
 function PIXIRenderer(emitter, texture) {
 	PIXI.Container.call(this);
 
-	this.setEmitter(emitter);
-	this.texture = texture;
+	this.emitter = emitter;
 	this.sprites = {};
-
 	this.unusedSprites = [];
+	this.texture = texture;
+
+	this.currentTime = 0;
+	this.lastTime = 0;
 
 	emitter.on("emitter/create", this.onCreate, this);
 	emitter.on("emitter/update", this.onUpdate, this);
@@ -19,25 +21,23 @@ PIXIRenderer.prototype.constructor = PIXIRenderer;
 
 PIXIRenderer.prototype.play = function() {
 	this.emitter.resetAndPlay();
-	PIXI.ticker.shared.add(this.update, this);
 };
 
 PIXIRenderer.prototype.stop = function() {
 	this.emitter.stop();
-	PIXI.ticker.shared.remove(this.update, this);
 };
 
 PIXIRenderer.prototype.reset = function() {
 	this.emitter.reset();
 };
 
-PIXIRenderer.prototype.update = function(dt) {
-	this.emitter.update(dt / 100);
-};
+PIXIRenderer.prototype.updateTransform = function() {
+	this.currentTime = performance.now();
 
-PIXIRenderer.prototype.setEmitter = function(emitter) {
-	this.emitter = emitter;
-	//this.emitter.setObserver(this);
+	this.emitter.update((this.currentTime - this.lastTime) / 1000);
+	PIXI.Container.prototype.updateTransform.call(this);
+
+	this.lastTime = this.currentTime;
 };
 
 PIXIRenderer.prototype.onCreate = function(particle) {
@@ -78,6 +78,26 @@ PIXIRenderer.prototype.onRemove = function(particle) {
 
 PIXIRenderer.prototype.onEmitComplete = function() {
 	this.stop();
+};
+
+Object.defineProperty(PIXIRenderer.prototype, "texture", {
+	get: function() {
+		return this._texture;
+	},
+	set: function(value) {
+		this._texture = value;
+		this.updateTexture();
+	}
+});
+
+PIXIRenderer.prototype.updateTexture = function() {
+	for (var i = 0; i < this.unusedSprites.length; ++i) {
+		this.unusedSprites[i].texture = this.texture;
+	}
+
+	for (i = 0; i < this.children.length; ++i) {
+		this.children[i].texture = this.texture;
+	}
 };
 
 module.exports = PIXIRenderer;
