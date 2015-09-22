@@ -1,25 +1,29 @@
 module.exports = Emitter;
 
 var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
-var NullObserver = require("./NullObserver.js");
 var ParticlePool = require("../ParticlePool.js");
-var List = require("../util").List;
+var util = require("../util");
 var DefaultEmitController = require("../controller").DefaultEmitController;
 var EmitterParser = require("../parser").EmitterParser;
 var parser = require("../parser");
+var EventEmitter = require("eventemitter3");
 
-function Emitter(observer) {
-	this.list = new List();
+function Emitter() {
+	EventEmitter.call(this);
+
+	this.list = new util.List();
 	this.behaviours = new EmitterBehaviours();
-
-	this.setObserver(observer);
 	this.emitController = new DefaultEmitController();
+
 	this.play();
 }
 
-Emitter.prototype.setObserver = function(observer) {
-	this.observer = observer || new NullObserver();
-};
+util.inherit(Emitter, EventEmitter);
+
+Emitter.CREATE = "emitter/create";
+Emitter.UPDATE = "emitter/update";
+Emitter.REMOVE = "emitter/remove";
+Emitter.COMPLETE = "emitter/complete";
 
 Emitter.prototype.update = function(deltaTime) {
 	if (!this._play) return;
@@ -29,7 +33,7 @@ Emitter.prototype.update = function(deltaTime) {
 
 	if (this.emitController.isEnd() && this.list.isEmpty()) {
 		this.stop();
-		this.observer.onEmitComplete();
+		this.emit(Emitter.COMPLETE);
 	}
 };
 
@@ -46,7 +50,7 @@ Emitter.prototype.createParticles = function(deltaTime) {
 	for (var i = 0; i < particlesToEmit; ++i) {
 		var particle = this.list.add(ParticlePool.global.pop());
 		this.behaviours.init(particle);
-		this.observer.onCreate(particle);
+		this.emit(Emitter.CREATE, particle);
 	}
 };
 
@@ -63,12 +67,12 @@ Emitter.prototype.updateParticle = function(particle, deltaTime) {
 	}
 	else {
 		this.behaviours.apply(particle, deltaTime);
-		this.observer.onUpdate(particle);
+		this.emit(Emitter.UPDATE, particle);
 	}
 };
 
 Emitter.prototype.removeParticle = function(particle) {
-	this.observer.onRemove(particle);
+	this.emit(Emitter.REMOVE, particle);
 	this.list.remove(particle);
 	ParticlePool.global.push(particle);
 };

@@ -23,7 +23,7 @@ function getBuildType() {
 		default: {src: "./src/engine/index.js", bin: "./bin", name: "jupiter.js"},
 		pixi: {src: "./src/renderer/pixi/index.js", bin: "./bin/pixi", name: "jupiter_pixi.js"}
 	};
-
+	
 	return types[rendererType];
 }
 

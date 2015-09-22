@@ -7,6 +7,10 @@ function PIXIRenderer(emitter, texture) {
 
 	this.unusedSprites = [];
 
+	emitter.on("emitter/create", this.onCreate, this);
+	emitter.on("emitter/update", this.onUpdate, this);
+	emitter.on("emitter/remove", this.onRemove, this);
+	emitter.on("emitter/complete", this.onEmitComplete, this);
 	this.play();
 }
 
@@ -33,7 +37,7 @@ PIXIRenderer.prototype.update = function(dt) {
 
 PIXIRenderer.prototype.setEmitter = function(emitter) {
 	this.emitter = emitter;
-	this.emitter.setObserver(this);
+	//this.emitter.setObserver(this);
 };
 
 PIXIRenderer.prototype.onCreate = function(particle) {
