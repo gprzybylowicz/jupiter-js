@@ -1,4 +1,4 @@
-function PIXIRenderer(emitter, texture) {
+function Renderer(emitter, texture) {
 	PIXI.Container.call(this);
 
 	this.emitter = emitter;
@@ -13,25 +13,12 @@ function PIXIRenderer(emitter, texture) {
 	emitter.on("emitter/update", this.onUpdate, this);
 	emitter.on("emitter/remove", this.onRemove, this);
 	emitter.on("emitter/complete", this.onEmitComplete, this);
-	this.play();
 }
 
-PIXIRenderer.prototype = Object.create(PIXI.Container.prototype);
-PIXIRenderer.prototype.constructor = PIXIRenderer;
+Renderer.prototype = Object.create(PIXI.Container.prototype);
+Renderer.prototype.constructor = Renderer;
 
-PIXIRenderer.prototype.play = function() {
-	this.emitter.resetAndPlay();
-};
-
-PIXIRenderer.prototype.stop = function() {
-	this.emitter.stop();
-};
-
-PIXIRenderer.prototype.reset = function() {
-	this.emitter.reset();
-};
-
-PIXIRenderer.prototype.updateTransform = function() {
+Renderer.prototype.updateTransform = function() {
 	this.currentTime = performance.now();
 
 	this.emitter.update((this.currentTime - this.lastTime) / 1000);
@@ -40,13 +27,13 @@ PIXIRenderer.prototype.updateTransform = function() {
 	this.lastTime = this.currentTime;
 };
 
-PIXIRenderer.prototype.onCreate = function(particle) {
+Renderer.prototype.onCreate = function(particle) {
 	var sprite = this.getOrCreateSprite();
 	sprite.visible = true;
 	particle.sprite = sprite;
 };
 
-PIXIRenderer.prototype.getOrCreateSprite = function() {
+Renderer.prototype.getOrCreateSprite = function() {
 	if (this.unusedSprites.length > 0) {
 		return this.unusedSprites.pop();
 	}
@@ -56,7 +43,7 @@ PIXIRenderer.prototype.getOrCreateSprite = function() {
 	return this.addChild(sprite);
 };
 
-PIXIRenderer.prototype.onUpdate = function(particle) {
+Renderer.prototype.onUpdate = function(particle) {
 	var sprite = particle.sprite;
 
 	sprite.x = particle.position.x;
@@ -69,18 +56,14 @@ PIXIRenderer.prototype.onUpdate = function(particle) {
 	sprite.alpha = particle.color.alpha;
 };
 
-PIXIRenderer.prototype.onRemove = function(particle) {
+Renderer.prototype.onRemove = function(particle) {
 	var sprite = particle.sprite;
 	particle.sprite = null;
 	sprite.visible = false;
 	this.unusedSprites.push(sprite);
 };
 
-PIXIRenderer.prototype.onEmitComplete = function() {
-	this.stop();
-};
-
-Object.defineProperty(PIXIRenderer.prototype, "texture", {
+Object.defineProperty(Renderer.prototype, "texture", {
 	get: function() {
 		return this._texture;
 	},
@@ -90,7 +73,7 @@ Object.defineProperty(PIXIRenderer.prototype, "texture", {
 	}
 });
 
-PIXIRenderer.prototype.updateTexture = function() {
+Renderer.prototype.updateTexture = function() {
 	for (var i = 0; i < this.unusedSprites.length; ++i) {
 		this.unusedSprites[i].texture = this.texture;
 	}
@@ -100,4 +83,4 @@ PIXIRenderer.prototype.updateTexture = function() {
 	}
 };
 
-module.exports = PIXIRenderer;
+module.exports = Renderer;

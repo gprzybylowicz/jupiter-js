@@ -1,5 +1,5 @@
 var jupiter = {
-	Renderer: require("./PIXIRenderer.js")
+	Renderer: require("./Renderer.js")
 };
 
 module.exports = jupiter;
