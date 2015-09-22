@@ -12,7 +12,6 @@ function Renderer(emitter, texture) {
 	emitter.on("emitter/create", this.onCreate, this);
 	emitter.on("emitter/update", this.onUpdate, this);
 	emitter.on("emitter/remove", this.onRemove, this);
-	emitter.on("emitter/complete", this.onEmitComplete, this);
 }
 
 Renderer.prototype = Object.create(PIXI.Container.prototype);
