@@ -20,6 +20,9 @@ function Emitter() {
 
 util.inherit(Emitter, EventEmitter);
 
+Emitter.PLAY = "emitter/play";
+Emitter.STOP = "emitter/stop";
+Emitter.RESET = "emitter/reset";
 Emitter.CREATE = "emitter/create";
 Emitter.UPDATE = "emitter/update";
 Emitter.REMOVE = "emitter/remove";
@@ -83,6 +86,7 @@ Emitter.prototype.getParser = function() {
 
 Emitter.prototype.play = function() {
 	this._play = true;
+	this.emit(Emitter.PLAY);
 };
 
 Emitter.prototype.resetAndPlay = function() {
@@ -95,9 +99,11 @@ Emitter.prototype.reset = function() {
 	this.list.forEach(function(particle) {
 		this.removeParticle(particle);
 	}.bind(this));
+	this.emit(Emitter.RESET);
 };
 
 Emitter.prototype.stop = function() {
 	this._play = false;
+	this.emit(Emitter.STOP);
 };
 

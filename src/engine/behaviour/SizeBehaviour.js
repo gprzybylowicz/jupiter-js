@@ -10,8 +10,8 @@ function SizeBehaviour() {
 
 	this.allowNegativeValues = false;
 
-	this.sizeStart = new Point();
-	this.sizeEnd = new Point();
+	this.sizeStart = new Point(1, 1);
+	this.sizeEnd = new Point(1, 1);
 	this.startVariance = 0;
 	this.endVariance = 0;
 }
@@ -44,6 +44,11 @@ SizeBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.size.copyFrom(particle.sizeStart);
 	particle.size.x += (particle.sizeEnd.x - particle.sizeStart.x) * particle.lifeProgress;
 	particle.size.y += (particle.sizeEnd.y - particle.sizeStart.y) * particle.lifeProgress;
+
+	if(!this.allowNegativeValues){
+		particle.size.x = Math.max(0, particle.size.x);
+		particle.size.x = Math.max(0, particle.size.x);
+	}
 };
 
 SizeBehaviour.prototype.getName = function() {

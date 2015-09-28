@@ -17,6 +17,8 @@ function Particle() {
 	this.acceleration = new Point();
 	this.velocity = new Point();
 
+	this.angularVelocity = 0;
+
 	this.size = new Point(1, 1);
 	this.sizeStart = new Point();
 	this.sizeEnd = new Point();
