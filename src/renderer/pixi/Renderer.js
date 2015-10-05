@@ -29,6 +29,7 @@ Renderer.prototype.updateTransform = function() {
 Renderer.prototype.onCreate = function(particle) {
 	var sprite = this.getOrCreateSprite();
 	sprite.visible = true;
+	sprite.blendMode = this.blendMode;
 	particle.sprite = sprite;
 };
 
