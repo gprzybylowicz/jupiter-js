@@ -59,6 +59,7 @@ Renderer.prototype.onUpdate = function(particle) {
 
 	sprite.tint = particle.color.hex;
 	sprite.alpha = particle.color.alpha;
+	sprite.rotation = particle.angle;
 };
 
 Renderer.prototype.onRemove = function(particle) {
