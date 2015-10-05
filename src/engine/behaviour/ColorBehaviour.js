@@ -1,4 +1,5 @@
 var Behaviour = require("./Behaviour.js");
+var BehaviourNames = require("./BehaviourNames.js");
 var Color = require("../util").Color;
 
 ColorBehaviour.DEFAULT_PRIORITY = 0;
@@ -46,7 +47,7 @@ ColorBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 ColorBehaviour.prototype.getName = function() {
-	return "ColorBehaviour";
+	return BehaviourNames.COLOR_BEHAVIOUR;
 };
 
 module.exports = ColorBehaviour;

@@ -1,4 +1,6 @@
 var Behaviour = require("./Behaviour.js");
+var BehaviourNames = require("./BehaviourNames.js");
+
 var Point = require("../util").Point;
 
 PositionBehaviour.DEFAULT_PRIORITY = 100;
@@ -43,7 +45,7 @@ PositionBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 PositionBehaviour.prototype.getName = function() {
-	return "PositionBehaviour";
+	return BehaviourNames.POSITION_BEHAVIOUR;
 };
 
 module.exports = PositionBehaviour;

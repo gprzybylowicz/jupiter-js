@@ -1,4 +1,6 @@
 var Behaviour = require("./Behaviour.js");
+var BehaviourNames = require("./BehaviourNames.js");
+
 var Point = require("../util").Point;
 
 SizeBehaviour.DEFAULT_PRIORITY = 0;
@@ -47,7 +49,7 @@ SizeBehaviour.prototype.apply = function(particle, deltaTime) {
 };
 
 SizeBehaviour.prototype.getName = function() {
-	return "SizeBehaviour";
+	return BehaviourNames.SIZE_BEHAVIOUR;
 };
 
 module.exports = SizeBehaviour;
