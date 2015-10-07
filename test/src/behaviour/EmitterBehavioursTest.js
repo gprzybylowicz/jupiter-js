@@ -121,7 +121,10 @@ describe("EmitterBehavioursTest", function() {
 	it("isEmpty", function() {
 		assert.ok(behaviours.isEmpty());
 
-		behaviours.add(new Behaviour());
+		var behaviour = new Behaviour();
+		sinon.stub(behaviour, "getName").returns("Test name");
+
+		behaviours.add(behaviour);
 		assert.notOk(behaviours.isEmpty());
 	});
 

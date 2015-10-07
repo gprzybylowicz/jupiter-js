@@ -15,18 +15,27 @@ EmitterBehaviours.prototype.clear = function() {
 };
 
 EmitterBehaviours.prototype.add = function(behaviour) {
-	for (var i = 0; i < this.behaviours.length; ++i) {
-		if (this.behaviours[i].getName() === behaviour.getName()) {
-			throw new Error("Emitter duplicate");
-		}
-	}
-	this.behaviours.push(behaviour);
+	if (this.getByName(behaviour.getName()) !== null) {
+		throw new Error("Emitter duplicate");
 
+	}
+
+	this.behaviours.push(behaviour);
 	this.behaviours.sort(function(a, b) {
 		return b.priority - a.priority;
 	});
 
 	return behaviour;
+};
+
+EmitterBehaviours.prototype.getByName = function(name) {
+	for (var i = 0; i < this.behaviours.length; ++i) {
+		if (this.behaviours[i].getName() === name) {
+			return this.behaviours[i];
+		}
+	}
+
+	return null;
 };
 
 EmitterBehaviours.prototype.init = function(particle) {
