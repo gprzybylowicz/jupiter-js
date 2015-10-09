@@ -26,7 +26,7 @@ LifeBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.lifeTime += deltaTime;
 
 	if (particle.maxLifeTime > 0) {
-		particle.lifeProgress = particle.lifeTime / particle.maxLifeTime;
+		particle.lifeProgress = Math.min(1.0, particle.lifeTime / particle.maxLifeTime);
 	}
 };
 

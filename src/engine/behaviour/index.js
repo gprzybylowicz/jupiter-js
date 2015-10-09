@@ -5,5 +5,6 @@ module.exports = {
 	PositionBehaviour: require("./PositionBehaviour.js"),
 	ColorBehaviour: require("./ColorBehaviour.js"),
 	SizeBehaviour: require("./SizeBehaviour.js"),
+	AngularVelocityBehaviour: require("./AngularVelocityBehaviour.js"),
 	BehaviourNames: require("./BehaviourNames.js")
 };

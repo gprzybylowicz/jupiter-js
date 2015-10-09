@@ -12,6 +12,7 @@ function Renderer(emitter, texture) {
 	emitter.on("emitter/create", this.onCreate, this);
 	emitter.on("emitter/update", this.onUpdate, this);
 	emitter.on("emitter/remove", this.onRemove, this);
+	emitter.on("emitter/play", this.onPlay, this);
 }
 
 Renderer.prototype = Object.create(PIXI.Container.prototype);
@@ -24,6 +25,11 @@ Renderer.prototype.updateTransform = function() {
 	PIXI.Container.prototype.updateTransform.call(this);
 
 	this.lastTime = this.currentTime;
+};
+
+Renderer.prototype.onPlay = function() {
+	this.currentTime = 0;
+	this.lastTime = 0;
 };
 
 Renderer.prototype.onCreate = function(particle) {
@@ -56,6 +62,7 @@ Renderer.prototype.onUpdate = function(particle) {
 
 	sprite.tint = particle.color.hex;
 	sprite.alpha = particle.color.alpha;
+	sprite.rotation = particle.angle;
 };
 
 Renderer.prototype.onRemove = function(particle) {
