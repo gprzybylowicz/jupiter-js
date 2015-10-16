@@ -21,6 +21,10 @@ Renderer.prototype.constructor = Renderer;
 Renderer.prototype.updateTransform = function() {
 	this.currentTime = performance.now();
 
+	if (this.lastTime === 0) {
+		this.lastTime = this.currentTime;
+	}
+
 	this.emitter.update((this.currentTime - this.lastTime) / 1000);
 	PIXI.Container.prototype.updateTransform.call(this);
 
@@ -90,6 +94,23 @@ Renderer.prototype.updateTexture = function() {
 	for (i = 0; i < this.children.length; ++i) {
 		this.children[i].texture = this.texture;
 	}
+};
+
+Renderer.prototype.playEmitter = function() {
+	this.emitter.play();
+};
+
+Renderer.prototype.stopEmitter = function() {
+	this.emitter.stop();
+};
+
+Renderer.prototype.resetEmitter = function() {
+	this.emitter.reset();
+};
+
+Renderer.prototype.getEmitterBehaviourByName = function(name) {
+	return this.emitter.behaviours.getByName(name);
+
 };
 
 module.exports = Renderer;

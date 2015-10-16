@@ -77,6 +77,7 @@ Emitter.prototype.updateParticle = function(particle, deltaTime) {
 Emitter.prototype.removeParticle = function(particle) {
 	this.emit(Emitter.REMOVE, particle);
 	this.list.remove(particle);
+	particle.reset();
 	ParticlePool.global.push(particle);
 };
 
@@ -96,14 +97,17 @@ Emitter.prototype.resetAndPlay = function() {
 
 Emitter.prototype.reset = function() {
 	this.emitController.reset();
-	this.list.forEach(function(particle) {
-		this.removeParticle(particle);
-	}.bind(this));
 	this.emit(Emitter.RESET);
 };
 
 Emitter.prototype.stop = function() {
 	this._play = false;
+	this.removeParticles();
 	this.emit(Emitter.STOP);
 };
 
+Emitter.prototype.removeParticles = function() {
+	this.list.forEach(function(particle) {
+		this.removeParticle(particle);
+	}.bind(this));
+};
