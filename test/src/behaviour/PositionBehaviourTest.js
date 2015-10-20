@@ -34,8 +34,8 @@ describe("PositionBehaviourTest", function() {
 		var particle = new Particle();
 		behaviour.init(particle);
 
-		assert.equal(particle.position.x, 3);
-		assert.equal(particle.position.y, 5);
+		assert.equal(particle.x, 3);
+		assert.equal(particle.y, 5);
 
 		assert.equal(particle.velocity.x, 4);
 		assert.equal(particle.velocity.y, 9);
@@ -48,8 +48,8 @@ describe("PositionBehaviourTest", function() {
 		var particle = new Particle();
 		behaviour.init(particle);
 
-		var startX = particle.position.x;
-		var startY = particle.position.y;
+		var startX = particle.x;
+		var startY = particle.y;
 		var velocityX = particle.velocity.x + (particle.acceleration.x * DELTA_TIME);
 		var velocityY = particle.velocity.y + (particle.acceleration.y * DELTA_TIME);
 
@@ -58,8 +58,8 @@ describe("PositionBehaviourTest", function() {
 		assert.equal(particle.velocity.x, velocityX);
 		assert.equal(particle.velocity.y, velocityY);
 
-		assert.equal(particle.position.x, startX + velocityX * DELTA_TIME);
-		assert.equal(particle.position.y, startY + velocityY * DELTA_TIME);
+		assert.equal(particle.x, startX + velocityX * DELTA_TIME);
+		assert.equal(particle.y, startY + velocityY * DELTA_TIME);
 	});
 
 	it("getParser return position config parser", function() {

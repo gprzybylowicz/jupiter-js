@@ -45,8 +45,8 @@ describe("EmitterBehavioursTest", function() {
 		behaviours.add(behaviour);
 		behaviours.init(fakeParticle);
 
-		assert.ok(spy.calledOnce);
-		assert.ok(spy.calledWithExactly(fakeParticle));
+		assert.ok(spy.calledOnce, "should be called only once");
+		assert.ok(spy.calledWithExactly(fakeParticle), "should be called with fakeParticle");
 		spy.restore();
 	});
 

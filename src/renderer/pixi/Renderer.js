@@ -58,8 +58,8 @@ Renderer.prototype.getOrCreateSprite = function() {
 Renderer.prototype.onUpdate = function(particle) {
 	var sprite = particle.sprite;
 
-	sprite.x = particle.position.x;
-	sprite.y = particle.position.y;
+	sprite.x = particle.x;
+	sprite.y = particle.y;
 
 	sprite.scale.x = particle.size.x;
 	sprite.scale.y = particle.size.y;

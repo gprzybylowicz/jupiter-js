@@ -24,8 +24,9 @@ AngularVelocityBehaviour.prototype.init = function(particle) {
 	particle.radiusStart = this.maxRadius + this.varianceFrom(this.maxRadiusVariance);
 	particle.radiusEnd = this.minRadius + this.varianceFrom(this.minRadiusVariance);
 
+	particle.x = 0;
+	particle.y = 0;
 	particle.radius = particle.radiusStart;
-	particle.position.set(0, 0);
 	particle.angle = 0;
 };
 
@@ -33,9 +34,13 @@ AngularVelocityBehaviour.prototype.apply = function(particle, deltaTime) {
 	particle.angle += particle.radiansPerSecond * deltaTime;
 	particle.radius = particle.radiusStart + (particle.radiusEnd - particle.radiusStart) * particle.lifeProgress;
 
-	particle.position.x = Math.cos(particle.angle) * particle.radius;
-	particle.position.y = Math.sin(particle.angle) * particle.radius;
+	particle.movement.x = Math.cos(particle.angle) * particle.radius;
+	particle.movement.y = Math.sin(particle.angle) * particle.radius;
+
+	particle.x = particle.movement.x;
+	particle.y = particle.movement.y;
 };
+
 AngularVelocityBehaviour.prototype.getName = function() {
 	return "AngularVelocityBehaviour";
 };

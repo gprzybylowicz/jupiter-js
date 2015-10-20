@@ -1,3 +1,6 @@
+var DEGREES_MULTIPLIER = Math.PI / 180.0;
+var RADIANS_MULTIPLIER = 180 / Math.PI;
+
 module.exports = {
 	EPSILON: 2.220446049250313e-16,
 
@@ -6,6 +9,10 @@ module.exports = {
 	},
 
 	degreesToRadians: function(degrees) {
-		return degrees * Math.PI / 180.0;
+		return degrees * DEGREES_MULTIPLIER;
+	},
+
+	radiansToDegrees: function(radians) {
+		return radians * RADIANS_MULTIPLIER;
 	}
 };
