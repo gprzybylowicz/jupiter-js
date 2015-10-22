@@ -1,5 +1,5 @@
 var behaviours = require("../behaviour");
-var controllers = require("../controller");
+var emissions = require("../emission");
 var Emitter = require("../emitter").Emitter;
 var CompatibilityHelper = require("./CompatibilityHelper.js");
 
@@ -39,7 +39,7 @@ EmitterParser.prototype.read = function(config) {
 		this.emitter.behaviours.add(behaviour);
 	}
 
-	this.emitter.emitController = this.createEmitController(config.emitController.name);
+	this.emitter.emitController = this.createEmitController(config.emitController.name || emissions.EmissionTypes.DEFAULT);
 	this.emitter.emitController.getParser().read(config.emitController);
 	this.emitter.duration.maxTime = CompatibilityHelper.readDuration(config);
 
@@ -61,10 +61,7 @@ EmitterParser.prototype.createBehaviour = function(name) {
 };
 
 EmitterParser.prototype.createEmitController = function(name) {
-	if (name) {
-		return new controllers[name];
-	}
-	return new controllers.DefaultEmitController();
+	return new emissions[name];
 };
 
 module.exports = EmitterParser;

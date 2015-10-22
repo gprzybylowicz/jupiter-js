@@ -1,17 +1,17 @@
 var util = require("../util");
-var EmitController = require("./EmitController.js");
-var EmitControllerNames = require("./EmitControllerNames.js");
+var AbstractEmission = require("./AbstractEmission.js");
+var EmissionTypes = require("./EmissionTypes.js");
 
-function RandomEmitController() {
-	EmitController.call(this);
+function RandomEmission() {
+	AbstractEmission.call(this);
 
 	this._maxParticles = 0;
 	this._emissionRate = 0;
 }
 
-util.inherit(RandomEmitController, EmitController);
+util.inherit(RandomEmission, AbstractEmission);
 
-RandomEmitController.prototype.howMany = function(deltaTime, particlesCount) {
+RandomEmission.prototype.howMany = function(deltaTime, particlesCount) {
 	if (particlesCount < this.maxParticles) {
 		var count = Math.round(util.Random.uniform(0, Math.ceil(this.emissionRate * deltaTime)));
 		var total = particlesCount + count;
@@ -21,7 +21,7 @@ RandomEmitController.prototype.howMany = function(deltaTime, particlesCount) {
 	return 0;
 };
 
-Object.defineProperty(RandomEmitController.prototype, "emissionRate", {
+Object.defineProperty(RandomEmission.prototype, "emissionRate", {
 	get: function() {
 		return this._emissionRate;
 	},
@@ -30,7 +30,7 @@ Object.defineProperty(RandomEmitController.prototype, "emissionRate", {
 	}
 });
 
-Object.defineProperty(RandomEmitController.prototype, "maxParticles", {
+Object.defineProperty(RandomEmission.prototype, "maxParticles", {
 	get: function() {
 		return this._maxParticles;
 	},
@@ -39,8 +39,8 @@ Object.defineProperty(RandomEmitController.prototype, "maxParticles", {
 	}
 });
 
-RandomEmitController.prototype.getName = function() {
-	return EmitControllerNames.RANDOM;
+RandomEmission.prototype.getName = function() {
+	return EmissionTypes.RANDOM;
 };
 
-module.exports = RandomEmitController;
+module.exports = RandomEmission;

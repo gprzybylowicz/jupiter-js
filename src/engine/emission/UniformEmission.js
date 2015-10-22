@@ -1,9 +1,9 @@
 var util = require("../util");
-var EmitController = require("./EmitController.js");
-var EmitControllerNames = require("./EmitControllerNames.js");
+var AbstractEmission = require("./AbstractEmission.js");
+var EmissionTypes = require("./EmissionTypes.js");
 
-function DefaultEmitContoller() {
-	EmitController.call(this);
+function UniformEmission() {
+	AbstractEmission.call(this);
 
 	this._maxParticles = 0;
 	this._maxLife = 1;
@@ -11,9 +11,9 @@ function DefaultEmitContoller() {
 	this._frames = 0;
 }
 
-util.inherit(DefaultEmitContoller, EmitController);
+util.inherit(UniformEmission, AbstractEmission);
 
-DefaultEmitContoller.prototype.howMany = function(deltaTime, particlesCount) {
+UniformEmission.prototype.howMany = function(deltaTime, particlesCount) {
 	var ratio = this._emitPerSecond * deltaTime;
 	this._frames += ratio;
 
@@ -26,25 +26,25 @@ DefaultEmitContoller.prototype.howMany = function(deltaTime, particlesCount) {
 	return numberToEmit;
 };
 
-DefaultEmitContoller.prototype.refresh = function() {
+UniformEmission.prototype.refresh = function() {
 	this.emitPerSecond = this._maxParticles / this._maxLife;
 };
 
-Object.defineProperty(DefaultEmitContoller.prototype, "maxLife", {
+Object.defineProperty(UniformEmission.prototype, "maxLife", {
 	set: function(value) {
 		this._maxLife = Math.max(value, 1);
 		this.refresh();
 	}
 });
 
-Object.defineProperty(DefaultEmitContoller.prototype, "maxParticles", {
+Object.defineProperty(UniformEmission.prototype, "maxParticles", {
 	set: function(value) {
 		this._maxParticles = Math.max(value, 0);
 		this.refresh();
 	}
 });
 
-Object.defineProperty(DefaultEmitContoller.prototype, "emitPerSecond", {
+Object.defineProperty(UniformEmission.prototype, "emitPerSecond", {
 	get: function() {
 		return this._emitPerSecond;
 	},
@@ -53,8 +53,8 @@ Object.defineProperty(DefaultEmitContoller.prototype, "emitPerSecond", {
 	}
 });
 
-DefaultEmitContoller.prototype.getName = function() {
-	return EmitControllerNames.DEFAULT;
+UniformEmission.prototype.getName = function() {
+	return EmissionTypes.DEFAULT;
 };
 
-module.exports = DefaultEmitContoller;
+module.exports = UniformEmission;

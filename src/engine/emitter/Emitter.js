@@ -3,7 +3,7 @@ module.exports = Emitter;
 var EmitterBehaviours = require("../behaviour").EmitterBehaviours;
 var ParticlePool = require("../ParticlePool.js");
 var util = require("../util");
-var DefaultEmitController = require("../controller").DefaultEmitController;
+var emission = require("../emission");
 var EmitterParser = require("../parser").EmitterParser;
 var EventEmitter = require("eventemitter3");
 var Duration = require("./Duration.js");
@@ -13,7 +13,7 @@ function Emitter() {
 
 	this.list = new util.List();
 	this.behaviours = new EmitterBehaviours();
-	this.emitController = new DefaultEmitController();
+	this.emitController = new emission[emission.EmissionTypes.DEFAULT];
 	this.duration = new Duration();
 
 	this.play();

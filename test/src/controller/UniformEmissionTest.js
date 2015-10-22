@@ -1,23 +1,23 @@
-var DefaultEmitController = require("jupiter").DefaultEmitController;
+var UniformEmission = require("jupiter").UniformEmission;
 
-describe("DefaultEmitController", function() {
+describe("UniformEmission", function() {
 
 	it("setting emitPerSecond explicity", function() {
-		var controller = new DefaultEmitController();
+		var controller = new UniformEmission();
 		controller.emitPerSecond = 10;
 
 		assert.equal(controller.emitPerSecond, 10);
 	});
 
 	it("emitPerSecond cannont be less than 0", function() {
-		var controller = new DefaultEmitController();
+		var controller = new UniformEmission();
 		controller.emitPerSecond = -1;
 
 		assert.equal(controller.emitPerSecond, 0);
 	});
 
 	it("howMany - maxLife equals 1 sec ", function() {
-		var controller = new DefaultEmitController();
+		var controller = new UniformEmission();
 		controller.maxParticles = 2;
 		controller.maxLife = 1;
 
@@ -28,7 +28,7 @@ describe("DefaultEmitController", function() {
 
 
 	it("howMany - maxLife equals 2 sec ", function() {
-		var controller = new DefaultEmitController();
+		var controller = new UniformEmission();
 		controller.maxParticles = 2;
 		controller.maxLife = 2;
 

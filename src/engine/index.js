@@ -6,7 +6,7 @@ var jupiter = {
 module.exports = jupiter;
 
 require("../polyfill");
-var controller = require("./controller");
+var controller = require("./emission");
 var behaviour = require("./behaviour");
 var util = require("./util");
 var emitter = require("./emitter");
