@@ -1,6 +1,7 @@
 var behaviours = require("../behaviour");
 var controllers = require("../controller");
 var Emitter = require("../emitter").Emitter;
+var CompatibilityHelper = require("./CompatibilityHelper.js");
 
 function EmitterParser(emitter) {
 	this.emitter = emitter;
@@ -16,6 +17,7 @@ EmitterParser.prototype.write = function() {
 	}
 
 	config.emitController = this.emitter.emitController.getParser().write();
+	config.duration = this.emitter.duration.maxTime;
 	config.meta = this.getMetadata();
 	return config;
 };
@@ -39,6 +41,7 @@ EmitterParser.prototype.read = function(config) {
 
 	this.emitter.emitController = this.createEmitController(config.emitController.name);
 	this.emitter.emitController.getParser().read(config.emitController);
+	this.emitter.duration.maxTime = CompatibilityHelper.readDuration(config);
 
 	return this.emitter;
 };

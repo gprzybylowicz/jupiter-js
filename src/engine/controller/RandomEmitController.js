@@ -12,8 +12,6 @@ function RandomEmitController() {
 util.inherit(RandomEmitController, EmitController);
 
 RandomEmitController.prototype.howMany = function(deltaTime, particlesCount) {
-	this._durationGuard.update(deltaTime);
-
 	if (particlesCount < this.maxParticles) {
 		var count = Math.round(util.Random.uniform(0, Math.ceil(this.emissionRate * deltaTime)));
 		var total = particlesCount + count;

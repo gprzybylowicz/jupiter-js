@@ -5,8 +5,8 @@ var ParticlePool = require("../ParticlePool.js");
 var util = require("../util");
 var DefaultEmitController = require("../controller").DefaultEmitController;
 var EmitterParser = require("../parser").EmitterParser;
-var parser = require("../parser");
 var EventEmitter = require("eventemitter3");
+var Duration = require("./Duration.js");
 
 function Emitter() {
 	EventEmitter.call(this);
@@ -14,6 +14,7 @@ function Emitter() {
 	this.list = new util.List();
 	this.behaviours = new EmitterBehaviours();
 	this.emitController = new DefaultEmitController();
+	this.duration = new Duration();
 
 	this.play();
 }
@@ -33,23 +34,22 @@ Emitter.prototype.update = function(deltaTime) {
 
 	this.emitParticles(deltaTime);
 	this.updateParticles(deltaTime);
+	this.duration.update(deltaTime);
 
-	if (this.emitController.isEnd() && this.list.isEmpty()) {
+	if (this.duration.isTimeElapsed() && this.list.isEmpty()) {
 		this.stop();
 		this.emit(Emitter.COMPLETE);
 	}
 };
 
 Emitter.prototype.emitParticles = function(deltaTime) {
-	if (!this.emitController.isEnd()) {
+	if (!this.duration.isTimeElapsed()) {
 		this.createParticles(deltaTime);
 	}
-
 };
 
 Emitter.prototype.createParticles = function(deltaTime) {
 	var particlesToEmit = this.emitController.howMany(deltaTime, this.list.length);
-
 	for (var i = 0; i < particlesToEmit; ++i) {
 		var particle = this.list.add(ParticlePool.global.pop());
 		this.behaviours.init(particle);
@@ -97,6 +97,7 @@ Emitter.prototype.resetAndPlay = function() {
 
 Emitter.prototype.reset = function() {
 	this.emitController.reset();
+	this.duration.reset();
 	this.removeParticles();
 	this.emit(Emitter.RESET);
 };

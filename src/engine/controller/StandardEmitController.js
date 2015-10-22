@@ -13,8 +13,6 @@ function StandardEmitController() {
 util.inherit(StandardEmitController, EmitController);
 
 StandardEmitController.prototype.howMany = function(deltaTime, particlesCount) {
-	this._durationGuard.update(deltaTime);
-
 	var rate = 1.0 / this.emissionRate;
 	var count = 0;
 	if (particlesCount < this.maxParticles) {

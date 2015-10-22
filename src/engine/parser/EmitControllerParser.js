@@ -14,9 +14,6 @@ EmitControllerParser.prototype.read = function(config) {
 			this._controller[key] = config[key];
 		}
 	}
-
-	var duration = !!config._durationGuard ? config._durationGuard.maxTime : -1;
-	this._controller.duration = duration;
 };
 
 module.exports = EmitControllerParser;

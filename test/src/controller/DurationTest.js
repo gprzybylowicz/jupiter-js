@@ -1,14 +1,14 @@
-var DurationGuard = require("jupiter").DurationGuard;
+var Duration = require("jupiter").Duration;
 
-describe("DurationGuardTest", function() {
+describe("DurationTest", function() {
 
 	it("default max time is - 1", function() {
-		var durationGuard = new DurationGuard();
+		var durationGuard = new Duration();
 		assert.equal(durationGuard.maxTime, -1);
 	});
 
 	it("maxTime to set to custom value", function() {
-		var durationGuard = new DurationGuard();
+		var durationGuard = new Duration();
 
 		durationGuard.maxTime = 23;
 		assert.equal(durationGuard.maxTime, 23, "duration equals 23");
@@ -18,7 +18,7 @@ describe("DurationGuardTest", function() {
 	});
 
 	it("isTimeElapsed false when default value", function() {
-		var durationGuard = new DurationGuard();
+		var durationGuard = new Duration();
 		assert.notOk(durationGuard.isTimeElapsed(), "false when new maxTime never has been changed");
 
 		durationGuard.duration = 20;
@@ -27,7 +27,7 @@ describe("DurationGuardTest", function() {
 	});
 
 	it("isTimeElapsed true only when elapsed time larger or equal then maxTime", function() {
-		var durationGuard = new DurationGuard();
+		var durationGuard = new Duration();
 
 		durationGuard.maxTime = 3;
 		durationGuard.update(0.5);
@@ -44,7 +44,7 @@ describe("DurationGuardTest", function() {
 	});
 
 	it("reset to elapse Time", function() {
-		var durationGuard = new DurationGuard();
+		var durationGuard = new Duration();
 
 		durationGuard.maxTime = 1;
 		durationGuard.update(10);

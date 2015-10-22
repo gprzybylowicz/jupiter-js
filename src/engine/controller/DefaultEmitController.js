@@ -23,7 +23,6 @@ DefaultEmitContoller.prototype.howMany = function(deltaTime, particlesCount) {
 		this._frames = 0;
 	}
 
-	this._durationGuard.update(deltaTime);
 	return numberToEmit;
 };
 
