@@ -1,5 +1,6 @@
 var util = require("../util");
 var EmitController = require("./EmitController.js");
+var EmitControllerNames = require("./EmitControllerNames.js");
 
 function DefaultEmitContoller() {
 	EmitController.call(this);
@@ -12,7 +13,7 @@ function DefaultEmitContoller() {
 
 util.inherit(DefaultEmitContoller, EmitController);
 
-DefaultEmitContoller.prototype.howMany = function(deltaTime) {
+DefaultEmitContoller.prototype.howMany = function(deltaTime, particlesCount) {
 	var ratio = this._emitPerSecond * deltaTime;
 	this._frames += ratio;
 
@@ -52,5 +53,9 @@ Object.defineProperty(DefaultEmitContoller.prototype, "emitPerSecond", {
 		this._emitPerSecond = Math.max(value, 0);
 	}
 });
+
+DefaultEmitContoller.prototype.getName = function() {
+	return EmitControllerNames.DEFAULT;
+};
 
 module.exports = DefaultEmitContoller;

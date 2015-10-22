@@ -1,6 +1,6 @@
 var DurationGuard = require("jupiter").DurationGuard;
 
-describe("EmitControllerTest", function() {
+describe("DurationGuardTest", function() {
 
 	it("default max time is - 1", function() {
 		var durationGuard = new DurationGuard();

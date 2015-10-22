@@ -1,4 +1,5 @@
 var behaviours = require("../behaviour");
+var controllers = require("../controller");
 var Emitter = require("../emitter").Emitter;
 
 function EmitterParser(emitter) {
@@ -14,8 +15,7 @@ EmitterParser.prototype.write = function() {
 		config.behaviours.push(behaviourConfig);
 	}
 
-	//todo: it's temporary solution - emit controller should have dedicated parser
-	config.emitController = JSON.parse(JSON.stringify(this.emitter.emitController));
+	config.emitController = this.emitter.emitController.getParser().write();
 	config.meta = this.getMetadata();
 	return config;
 };
@@ -37,13 +37,8 @@ EmitterParser.prototype.read = function(config) {
 		this.emitter.behaviours.add(behaviour);
 	}
 
-	//todo: it's temporaty solution - see above (line 18)
-	this.emitter.emitController.maxLife = config.emitController._maxLife;
-	this.emitter.emitController.maxParticles = config.emitController._maxParticles;
-	this.emitter.emitController.emitPerSecond = config.emitController._emitPerSecond;
-
-	var duration = !!config.emitController._durationGuard ? config.emitController._durationGuard.maxTime : -1;
-	this.emitter.emitController.duration = duration;
+	this.emitter.emitController = this.createEmitController(config.emitController.name);
+	this.emitter.emitController.getParser().read(config.emitController);
 
 	return this.emitter;
 };
@@ -60,6 +55,13 @@ EmitterParser.prototype.getExistingOrCreate = function(name, existingBehaviours)
 
 EmitterParser.prototype.createBehaviour = function(name) {
 	return new behaviours[name];
+};
+
+EmitterParser.prototype.createEmitController = function(name) {
+	if (name) {
+		return new controllers[name];
+	}
+	return new controllers.DefaultEmitController();
 };
 
 module.exports = EmitterParser;

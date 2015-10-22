@@ -48,7 +48,7 @@ Emitter.prototype.emitParticles = function(deltaTime) {
 };
 
 Emitter.prototype.createParticles = function(deltaTime) {
-	var particlesToEmit = this.emitController.howMany(deltaTime);
+	var particlesToEmit = this.emitController.howMany(deltaTime, this.list.length);
 
 	for (var i = 0; i < particlesToEmit; ++i) {
 		var particle = this.list.add(ParticlePool.global.pop());
@@ -97,6 +97,7 @@ Emitter.prototype.resetAndPlay = function() {
 
 Emitter.prototype.reset = function() {
 	this.emitController.reset();
+	this.removeParticles();
 	this.emit(Emitter.RESET);
 };
 

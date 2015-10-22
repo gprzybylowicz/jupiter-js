@@ -1,4 +1,5 @@
 var EmitController = require("jupiter").EmitController;
+var EmitControllerParser = require("jupiter").EmitControllerParser;
 
 describe("EmitControllerTest", function() {
 
@@ -26,6 +27,16 @@ describe("EmitControllerTest", function() {
 		var controller = new EmitController();
 		controller.duration = -1;
 		assert.notOk(controller.isEnd());
+	});
+
+	it("getName -  should throw a exception", function() {
+		var controller = new EmitController();
+		assert.throw(controller.getName, Error);
+	});
+
+	it("getParser -  should return default parser", function() {
+		var controller = new EmitController();
+		assert.instanceOf(controller.getParser(), EmitControllerParser);
 	});
 
 });
