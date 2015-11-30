@@ -38,6 +38,17 @@ EmitterBehaviours.prototype.getByName = function(name) {
 	return null;
 };
 
+EmitterBehaviours.prototype.removeByName = function(name) {
+	var behaviours = [];
+	for (var i = 0; i < this.behaviours.length; ++i) {
+		if (this.behaviours[i].getName() !== name) {
+			behaviours.push(this.behaviours[i]);
+		}
+	}
+
+	this.behaviours = behaviours;
+};
+
 EmitterBehaviours.prototype.init = function(particle) {
 	for (var i = 0; i < this.behaviours.length; ++i) {
 		this.behaviours[i].init(particle);
