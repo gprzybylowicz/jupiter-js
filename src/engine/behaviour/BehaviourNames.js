@@ -3,6 +3,7 @@ module.exports = {
 	COLOR_BEHAVIOUR: "ColorBehaviour",
 	POSITION_BEHAVIOUR: "PositionBehaviour",
 	SIZE_BEHAVIOUR: "SizeBehaviour",
-	EMIT_DIRECTION: "EmitDirectionBehaviour"
+	EMIT_DIRECTION: "EmitDirectionBehaviour",
+	ROTATION_BEHAVIOUR: "RotationBehaviour"
 };
 

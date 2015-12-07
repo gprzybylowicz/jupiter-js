@@ -7,5 +7,6 @@ module.exports = {
 	SizeBehaviour: require("./SizeBehaviour.js"),
 	AngularVelocityBehaviour: require("./AngularVelocityBehaviour.js"),
 	EmitDirectionBehaviour: require("./EmitDirectionBehaviour.js"),
+	RotationBehaviour: require("./RotationBehaviour.js"),
 	BehaviourNames: require("./BehaviourNames.js")
 };

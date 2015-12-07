@@ -31,11 +31,11 @@ AngularVelocityBehaviour.prototype.init = function(particle) {
 };
 
 AngularVelocityBehaviour.prototype.apply = function(particle, deltaTime) {
-	particle.angle += particle.radiansPerSecond * deltaTime;
+	particle.velocityAngle += particle.radiansPerSecond * deltaTime;
 	particle.radius = particle.radiusStart + (particle.radiusEnd - particle.radiusStart) * particle.lifeProgress;
 
-	particle.movement.x = Math.cos(particle.angle) * particle.radius;
-	particle.movement.y = Math.sin(particle.angle) * particle.radius;
+	particle.movement.x = Math.cos(particle.velocityAngle) * particle.radius;
+	particle.movement.y = Math.sin(particle.velocityAngle) * particle.radius;
 
 	particle.x = particle.movement.x;
 	particle.y = particle.movement.y;
