@@ -13,6 +13,11 @@ var minimist = require('minimist');
 var watch = require('gulp-watch');
 var jshint = require('gulp-jshint');
 var runSequence = require('run-sequence');
+var header = require('gulp-header');
+var fs = require('fs');
+var path = require('path');
+var headerText = fs.readFileSync(path.join(__dirname, 'header.txt'), 'utf8');
+var licenseText = fs.readFileSync(path.join(__dirname, 'LICENSE'), 'utf8');
 
 var options = minimist(process.argv.slice(2));
 
@@ -23,7 +28,7 @@ function getBuildType() {
 		default: {src: "./src/engine/index.js", bin: "./bin", name: "jupiter.js"},
 		pixi: {src: "./src/renderer/pixi/index.js", bin: "./bin/pixi", name: "jupiter_pixi.js"}
 	};
-	
+
 	return types[rendererType];
 }
 
@@ -54,6 +59,11 @@ gulp.task("browserify:standalone", ["jshint"], function() {
 		.pipe(source(build.src))
 		.pipe(rename(build.name))
 		.pipe(buffer())
+		.pipe(header(headerText, {
+				licenseText: licenseText,
+				date: new Date().toISOString()
+			}
+		))
 		.pipe(sourcemaps.init({loadMaps: true})).on("error", gutil.log)
 		.pipe(sourcemaps.write("./"))
 		.pipe(gulp.dest(build.bin))
